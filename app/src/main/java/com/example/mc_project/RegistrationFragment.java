@@ -53,10 +53,10 @@ public class RegistrationFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new LoginFragment()).commit();
-            requireActivity().finish();
-        }
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new LoginFragment()).commit();
+//            requireActivity().finish();
+//        }
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

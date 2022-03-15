@@ -3,6 +3,8 @@ package com.example.mc_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class LoginRegistrationActivity extends AppCompatActivity {
 
@@ -13,4 +15,5 @@ public class LoginRegistrationActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new LoginFragment()).commit();
     }
+
 }

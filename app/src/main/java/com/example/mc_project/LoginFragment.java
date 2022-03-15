@@ -1,11 +1,13 @@
 package com.example.mc_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,51 +50,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         registerButton = v.findViewById(R.id.registerHere);
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String myEmail = email.getText().toString().trim();
-//                String myPassword = password.getText().toString().trim();
-//
-//                if (TextUtils.isEmpty(myEmail)) {
-//                    email.setError("Email is required");
-//                    return;
-//                }
-//
-//                if (TextUtils.isEmpty(myPassword)) {
-//                    password.setError("Password is required");
-//                    return;
-//                }
-//
-//                if (myPassword.length() < 6) {
-//                    password.setError("Password must be greater than 6 characters");
-//                    return;
-//                }
-//
-//                progressBar.setVisibility(View.VISIBLE);
-//
-//                firebaseAuth.signInWithEmailAndPassword(myEmail, myPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
-//                            //TODO after successful login
-//                            requireActivity().finish();
-//                        } else {
-//                            Toast.makeText(getActivity(), "Unsuccessful Login: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//
-//            }
-//        });
-//        registerButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new RegistrationFragment()).commit();
-//            }
-//        });
         return v;
     }
 
@@ -124,11 +83,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Log.d("LoginFragment.class", "onComplete: LOGIN SUCCESSFUL");
                             Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
-                            //TODO after successful login
-                            requireActivity().finish();
+                            //Intent intent= new Intent(view.getContext(), MainActivity.class);
+                            startActivity(new Intent(getContext(), MainActivity.class));
+
                         } else {
-                            Toast.makeText(getActivity(), "Unsuccessful Login: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("LoginFragment.class", "onComplete: LOGIN UNSUCCESSFUL");
+                            Toast.makeText(getContext(), "Unsuccessful Login: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
