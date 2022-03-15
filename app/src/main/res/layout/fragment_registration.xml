@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4">
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        >
 
         <EditText
             android:id="@+id/name"
@@ -27,7 +28,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -46,13 +47,24 @@
             app:layout_constraintVertical_bias="0.048"
             tools:ignore="TouchTargetSizeCheck" />
 
+        <View
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
+
+
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -69,13 +81,24 @@
             app:layout_constraintTop_toBottomOf="@+id/name"
             app:layout_constraintVertical_bias="0.027" />
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
+
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -92,13 +115,24 @@
             app:layout_constraintTop_toBottomOf="@+id/email"
             app:layout_constraintVertical_bias="0.043" />
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
+
         <EditText
             android:id="@+id/phoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -115,13 +149,24 @@
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintVertical_bias="0.054" />
 
+        <View
+            android:id="@+id/view4"
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
+
         <EditText
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -137,6 +182,17 @@
             app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
             app:layout_constraintVertical_bias="0.092"
             tools:ignore="TouchTargetSizeCheck" />
+        <View
+            android:id="@+id/view5"
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
+
 
         <EditText
             android:id="@+id/city"
@@ -144,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="0dp"
             android:background="@null"
             android:ems="10"
             android:fontFamily="@font/amaranth"
@@ -159,6 +215,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/address"
             app:layout_constraintVertical_bias="0.092" />
+        <View
+            android:id="@+id/view6"
+            android:layout_width="265dp"
+            android:layout_height="1dp"
+            android:layout_alignBaseline="@+id/editText"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8F3949AB" />
 
     </LinearLayout>
 
@@ -179,7 +245,7 @@
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/amaranth"
 
             android:paddingRight="20dp"
@@ -195,7 +261,6 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
         android:fontFamily="@font/amaranth"
         android:text="@string/create_a_new_account"
         android:textAlignment="viewEnd"
