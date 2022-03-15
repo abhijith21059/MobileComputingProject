@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
@@ -63,6 +64,12 @@ public class RegistrationFragment extends Fragment {
             public void onClick(View view) {
                 String myEmail = email.getText().toString().trim();
                 String myPassword = password.getText().toString().trim();
+                String myFullName = name.getText().toString().trim();
+                String myPhone = phone.getText().toString().trim();
+                String myAddress = address.getText().toString().trim();
+                String myCity = city.getText().toString().trim();
+
+
 
                 if (TextUtils.isEmpty(myEmail)) {
                     email.setError("Email is required");
@@ -85,6 +92,9 @@ public class RegistrationFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Patients patient = new Patients(myFullName, myEmail, myPassword, myPhone, myAddress, myCity);
+                            FirebaseDatabase.getInstance().getReference("Patients").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(patient);
+
                             Toast.makeText(getActivity(), "User created successfully", Toast.LENGTH_SHORT).show();
                             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new LoginFragment()).commit();
                         } else {
