@@ -85,8 +85,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             Log.d("LoginFragment.class", "onComplete: LOGIN SUCCESSFUL");
                             Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
-                            //Intent intent= new Intent(view.getContext(), MainActivity.class);
-                            startActivity(new Intent(getContext(), MainActivity.class));
+                            //START LOGIN DASHBOARD
+//                            startActivity(new Intent(getContext(), MainActivity.class));
+                            startActivity(new Intent(getContext(), Dashborad.class));
+
 
                         } else {
                             Log.d("LoginFragment.class", "onComplete: LOGIN UNSUCCESSFUL");
@@ -94,6 +96,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
+
                 break;
 
             case R.id.registerHere:
