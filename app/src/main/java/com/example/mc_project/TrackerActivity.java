@@ -13,5 +13,7 @@ public class TrackerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tracker);
         TextView hello = findViewById(R.id.tvTracker);
         hello.setText("IN TRACKER");
+
+        //this is a comment
     }
 }
