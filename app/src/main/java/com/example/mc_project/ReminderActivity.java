@@ -30,32 +30,31 @@ public class ReminderActivity extends AppCompatActivity {
         if (MedicineFragment == null) {
             MedicineFragment = new MedicineFragment();
             fm1.beginTransaction()
-                    .replace(R.id.fragment_container, MedicineFragment)
-                    .addToBackStack(null)
+                    .add(R.id.fragment_container, MedicineFragment)
                     .commit();
         }
 
 
 
 
-        mAddFab=findViewById(R.id.add_fab);
-        mAddFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAddFab.setVisibility(view.GONE);
-                //mAddFab.setImageResource(R.drawable.ic_done);
-                FragmentManager fm = getSupportFragmentManager();
-                Fragment addMedicineFragment = fm.findFragmentById(R.id.fragment_container);
-                //findFragmentById(R.id.fragment_container);
-                if (addMedicineFragment == null) {
-                    addMedicineFragment = new AddMedFragment();
-                    fm.beginTransaction()
-                            .replace(R.id.fragment_container, addMedicineFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-            }
-        });
+//        mAddFab=findViewById(R.id.add_fab);
+//        mAddFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mAddFab.setVisibility(view.GONE);
+//                //mAddFab.setImageResource(R.drawable.ic_done);
+//                FragmentManager fm = getSupportFragmentManager();
+//                Fragment addMedicineFragment = fm.findFragmentById(R.id.fragment_container);
+//                //findFragmentById(R.id.fragment_container);
+//                if (addMedicineFragment == null) {
+//                    addMedicineFragment = new AddMedFragment();
+//                    fm.beginTransaction()
+//                            .replace(R.id.fragment_container, addMedicineFragment)
+//                            .addToBackStack(null)
+//                            .commit();
+//                }
+//            }
+//        });
 
 //        FragmentManager fm = getSupportFragmentManager();
 //        Fragment addMedicineFragment = fm.findFragmentById(R.id.fragment_container);
