@@ -20,12 +20,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
 
 public class AddMedFragment extends Fragment implements View.OnClickListener {
 
+    FloatingActionButton mAddFab1,mAddFab;
 
     private EditText editMedName;
     private CheckBox allDayCheckBox;
@@ -66,6 +70,16 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mActivity = getActivity();
+        mAddFab1=mActivity.findViewById(R.id.add_fab);
+        //mAddFab1.setImageResource(R.drawable.ic_done);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAddFab1.setVisibility(View.VISIBLE);
+        //mAddFab1.setImageResource(R.drawable.ic_add);
     }
 
     @Override
@@ -89,6 +103,16 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         thurCheckBox = (CheckBox)view.findViewById(R.id.dv_thursday);
         friCheckBox = (CheckBox)view.findViewById(R.id.dv_friday);
         satCheckBox = (CheckBox)view.findViewById(R.id.dv_saturday);
+
+        mAddFab=view.findViewById(R.id.done_fab);
+        mAddFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                save to database----to be done
+                Toast.makeText(mActivity, "Medicine saved", Toast.LENGTH_SHORT).show();
+                mActivity.onBackPressed();
+            }
+        });
 
         timeBtn = (Button)view.findViewById(R.id.timeButton);
         dosageText = (EditText)view.findViewById(R.id.tv_dose_quantity);
