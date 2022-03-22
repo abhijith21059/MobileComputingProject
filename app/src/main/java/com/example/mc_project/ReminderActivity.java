@@ -24,6 +24,20 @@ public class ReminderActivity extends AppCompatActivity {
 
         //AddMedFragment addMedicineFragment = (AddMedFragment) getSupportFragmentManager();
 
+        FragmentManager fm1 = getSupportFragmentManager();
+        Fragment MedicineFragment = fm1.findFragmentById(R.id.fragment_container);
+        //findFragmentById(R.id.fragment_container);
+        if (MedicineFragment == null) {
+            MedicineFragment = new MedicineFragment();
+            fm1.beginTransaction()
+                    .replace(R.id.fragment_container, MedicineFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
+
+
         mAddFab=findViewById(R.id.add_fab);
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +50,7 @@ public class ReminderActivity extends AppCompatActivity {
                 if (addMedicineFragment == null) {
                     addMedicineFragment = new AddMedFragment();
                     fm.beginTransaction()
-                            .add(R.id.fragment_container, addMedicineFragment)
+                            .replace(R.id.fragment_container, addMedicineFragment)
                             .addToBackStack(null)
                             .commit();
                 }
