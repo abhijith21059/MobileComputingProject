@@ -3,25 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_login_registration.xml" value="0.12395833333333334" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_main.xml" value="0.2708333333333333" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/fragment_login.xml" value="0.12395833333333334" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/fragment_registration.xml" value="0.264" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.206" />
-        <entry key="app/src/main/res/drawable/background_linear.xml" value="0.206" />
-        <entry key="app/src/main/res/drawable/backgroung_btn.xml" value="0.206" />
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/activity_dashborad.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/activity_reminder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/fragment_add_med.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.206" />
-        <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_dashborad.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_report.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_sos.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_tracker.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.2947916666666667" />
       </map>
