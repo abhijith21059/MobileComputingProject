@@ -18,8 +18,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+
             app:cardCornerRadius="4dp"
             android:id="@+id/mednameCV"
             app:cardElevation="2dp"
@@ -38,6 +37,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Medicine Name"
+                    android:padding="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+
+                    android:background="@drawable/rounded_corners"
+
                     android:textStyle="bold"/>
 
                 <EditText
@@ -72,6 +77,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Days"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:background="@drawable/rounded_corners"
                     android:textStyle="bold"/>
 
 
@@ -185,11 +194,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:background="@drawable/rounded_corners"
+                    android:shape="rectangle"
+                    android:padding="8dp"
                     android:text="Reminder" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <Button
@@ -225,7 +240,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="15dp"
+            android:layout_margin="15dp"
             android:backgroundTint="#145B9A"
 
             android:src="@drawable/ic_done"
