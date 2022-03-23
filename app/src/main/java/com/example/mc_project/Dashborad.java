@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Dashborad extends AppCompatActivity  {
     private Button logoutButton;
     private CardView cardCalendar,cardReports,cardReminder,cardSos,cardTracker;
@@ -71,6 +73,7 @@ public class Dashborad extends AppCompatActivity  {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(Dashborad.this,LoginRegistrationActivity.class));
 
             }

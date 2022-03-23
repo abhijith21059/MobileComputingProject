@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_login_registration.xml" value="0.12395833333333334" />
         <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_main.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/fragment_login.xml" value="0.12395833333333334" />
@@ -19,16 +20,25 @@
         <entry key="app/src/main/res/layout/activity_capture.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/activity_capture_image.xml" value="0.10778985507246377" />
         <entry key="app/src/main/res/layout/activity_dashborad.xml" value="0.25" />
+=======
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/activity_dashborad.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/activity_reminder.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ishita/Desktop/IIITD-21/MobileComputingProject/app/src/main/res/layout/fragment_add_med.xml" value="0.264" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+>>>>>>> 1ec3e72723c8c17ae4b645a0ee39187ce5be7fdd
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/activity_report.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/activity_sos.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/activity_tracker.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/fragment_capture_image.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/fragment_list_report.xml" value="0.19739583333333333" />
+=======
+>>>>>>> 1ec3e72723c8c17ae4b645a0ee39187ce5be7fdd
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.1" />
         <entry key="app/src/main/res/xml/file_path.xml" value="0.1" />
