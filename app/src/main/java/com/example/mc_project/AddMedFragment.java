@@ -23,7 +23,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -47,6 +56,9 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     private EditText dosageText;
 
     Medicine med;
+    Boolean[] days=new Boolean[7];
+    int nchild;
+
     private String DEBUG_TAG="AddMedFragment";
     private View view;
     private Activity mActivity;
@@ -108,7 +120,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                save to database----to be done
+//                save to database----to be done0
+                savedata();
                 Toast.makeText(mActivity, "Medicine saved", Toast.LENGTH_SHORT).show();
                 mActivity.onBackPressed();
             }
@@ -143,75 +156,136 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    private void savedata() {
+
+        String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    Log.i("DataSnapshot", "does not exists");
+                }
+                else {
+                    Log.i("DataSnapshot", "exists");
+                    nchild = (int) dataSnapshot.getChildrenCount()+1;
+
+                    DatabaseReference ref2 = ref.child("med" + Integer.toString(nchild));
+
+                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.i("DataSnapshot", "checked till here 166");
+
+                            med.setMedName(editMedName.getText().toString().trim());
+//                            Log.i("Dosagecheck","prinitng:"+dosageText.getText().toString());
+                            med.setDosage(Float.parseFloat(dosageText.getText().toString()));
+
+//                med.setDays(new boolean[]{true,false,true,false,true,false,false});
+
+                            List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+                            med.setDays(daylist);
+
+                            ref2.setValue(med);
+                            Log.i("DataSnapshot", "checked till here 169");
+//                medicineDataList.clear();
+
+//                for(DataSnapshot snapshot1:dataSnapshot.getChildren()){
+//                    Log.i("children","med available"+snapshot1.getValue().toString());
+//                    Medicine m=new Medicine(snapshot1.getValue().toString());
+//                    //medicineDataList.add(m);
+//                }
+//                medicineAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.i("DBERROR","printing error"+error.getMessage());
+            }
+        });
+    }
+
     public void onClick(View view1) {
         boolean checked = ((CheckBox) view1).isChecked();
         switch (view1.getId()) {
             case R.id.dv_sunday:
                 if (checked) {
-                    med.days[0] = true;
+                    days[0] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[0] = false;
+                    days[0] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_monday:
                 if (checked) {
-                    med.days[1] = true;
+                    days[1] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[1] = false;
+                    days[1] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_tuesday:
                 if (checked) {
-                    med.days[2] = true;
+                    days[2] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[2] = false;
+                    days[2] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_wednesday:
                 if (checked) {
-                    med.days[3] = true;
+                    days[3] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[3] = false;
+                    days[3] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_thursday:
                 if (checked) {
-                    med.days[4] = true;
+                    days[4] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[4] = false;
+                    days[4] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_friday:
                 if (checked) {
-                    med.days[5] = true;
+                    days[5] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[5] = false;
+                    days[5] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
                 break;
             case R.id.dv_saturday:
                 if (checked) {
-                    med.days[6] = true;
+                    days[6] = true;
                     view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
                 } else {
-                    med.days[6] = false;
+                    days[6] = false;
                     allDayCheckBox.setChecked(false);
                     view1.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 }
@@ -240,6 +314,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                 hour = selectedHour;
                 minute = selectedMinute;
                 timeBtn.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+                med.setHr(hour);
+                med.setMin(minute);
             }
         };
 

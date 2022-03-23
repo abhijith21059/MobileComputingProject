@@ -106,4 +106,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //todo--remove loader on back press from dashboard
 }
