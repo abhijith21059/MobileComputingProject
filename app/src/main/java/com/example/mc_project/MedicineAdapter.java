@@ -1,5 +1,6 @@
 package com.example.mc_project;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.List;
 public class MedicineAdapter extends RecyclerView.Adapter<MedHolder> {
 
     private final List<Medicine> mMedicine;
+    Context context;
 
     public MedicineAdapter(List<Medicine> items) {
         mMedicine = items;
