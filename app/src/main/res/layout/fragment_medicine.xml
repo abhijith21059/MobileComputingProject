@@ -6,7 +6,6 @@
 
     tools:context=".MedicineFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
