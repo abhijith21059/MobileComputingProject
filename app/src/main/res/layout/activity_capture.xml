@@ -24,13 +24,14 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="76dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="63dp"
             android:layout_marginTop="44dp"
-            android:layout_marginEnd="58dp"
+            android:layout_marginEnd="71dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/upload" />
+            tools:src="@drawable/ic_baseline_add_photo" />
 
         <TextView
             android:id="@+id/tvUpload"
@@ -39,6 +40,7 @@
             android:layout_below="@+id/imageViewCapture"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="61dp"
+            android:text="Please select an image"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -49,8 +51,11 @@
             android:layout_width="275dp"
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="72dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="104dp"
+            android:layout_marginEnd="103dp"
             android:layout_marginBottom="35dp" />
 
     </RelativeLayout>
@@ -62,7 +67,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="76dp"
         android:background="@drawable/button_orange"
-        android:text="Capture"
+        android:text="Capture Image"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -75,7 +80,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/button_orange"
-        android:text="Upload"
+        android:text="Select from gallery"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
