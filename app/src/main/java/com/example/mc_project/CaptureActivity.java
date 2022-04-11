@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,11 +39,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class CaptureActivity extends AppCompatActivity {
 
     public static final int CAMERA_PERM_CODE = 101;
-    private static final int REQUEST_IMAGE_CAPTURE = 102 ;
+    private static final int REQUEST_IMAGE_CAPTURE = 102,GALLERY_REQUEST=105 ;
     ImageView selectedImage;
     TextView tvUpload;
     ProgressBar pg;
@@ -61,6 +65,7 @@ public class CaptureActivity extends AppCompatActivity {
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 askCameraPermission();
             }
 
@@ -70,7 +75,8 @@ public class CaptureActivity extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent gallery = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(gallery,GALLERY_REQUEST);
             }
         });
 
@@ -124,7 +130,25 @@ public class CaptureActivity extends AppCompatActivity {
             uploadImageToFirebase(f.getName(),contentUri);
         }
         //HANDLE GALLERY UPLOAD
+        if(requestCode==GALLERY_REQUEST  ){
+            Log.i("insideeeee","hogya bhai capture");
+            Uri contentUri = data.getData();
+            String timestamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+            String fileName = "JPEG_"+timestamp+"."+getFileExt(contentUri);
+            Log.i("imageeeeee",fileName);
+            selectedImage.setImageURI(contentUri);
+            uploadImageToFirebase(fileName,contentUri);
+        }
 
+    }
+
+    private String getFileExt(Uri contentUri) {
+        ContentResolver c = getContentResolver();
+
+        Log.i("imageeeeee","CONTENTRESOLVEREEEE");
+
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return  mime.getExtensionFromMimeType(c.getType(contentUri));
     }
 
     private void uploadImageToFirebase(String name, Uri contentUri) {
@@ -137,6 +161,21 @@ public class CaptureActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.i("tagsuccess","SUCCESS TO UPLOAD " + uri);
+//                        String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//
+//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("reports");
+//                        HashMap<String,String> images = new HashMap<>();
+//                        images.put("image_uri", String.valueOf(uri));
+//                        ref.setValue(images).addOnSuccessListener(new OnSuccessListener<Void>(){
+//
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Toast.makeText(CaptureActivity.this,
+//                                        "Uploaded!",
+//                                        Toast.LENGTH_LONG).show();
+//
+//                            }
+//                        });
                         tvUpload.setText("Your image has been upload!");
                     }
                 });
