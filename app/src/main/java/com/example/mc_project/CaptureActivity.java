@@ -50,7 +50,7 @@ public class CaptureActivity extends AppCompatActivity {
     ProgressBar pg;
     private String currentPhotoPath;
 
-    private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Image");
+    //private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Image");
     private StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://mc-project-c7fbc.appspot.com");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,10 @@ public class CaptureActivity extends AppCompatActivity {
         selectedImage =findViewById(R.id.imageViewCapture);
         tvUpload = findViewById(R.id.tvUpload);
         pg = findViewById(R.id.progressBar3);
+
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.i("tagsuccess","userid " + user);
+
 
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,21 +165,21 @@ public class CaptureActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.i("tagsuccess","SUCCESS TO UPLOAD " + uri);
-//                        String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//
-//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("reports");
-//                        HashMap<String,String> images = new HashMap<>();
-//                        images.put("image_uri", String.valueOf(uri));
-//                        ref.setValue(images).addOnSuccessListener(new OnSuccessListener<Void>(){
-//
-//                            @Override
-//                            public void onSuccess(Void unused) {
-//                                Toast.makeText(CaptureActivity.this,
-//                                        "Uploaded!",
-//                                        Toast.LENGTH_LONG).show();
-//
-//                            }
-//                        });
+                        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        Log.i("tagsuccess","userid " + user);
+                        ImageModel model = new ImageModel(String.valueOf(uri));
+
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(user).child("reports");
+                        HashMap<String,String> images = new HashMap<>();
+                        images.put("image_uri", String.valueOf(uri));
+                        //String modelID = ref.push().getKey();
+                        Log.i("tagsuccess","reference " + String.valueOf(ref));
+                        ref.setValue(images).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.i("tagsuccess","done ");
+                            }
+                        });
                         tvUpload.setText("Your image has been upload!");
                     }
                 });
