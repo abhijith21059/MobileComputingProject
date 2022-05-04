@@ -28,8 +28,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -49,6 +52,7 @@ public class CaptureActivity extends AppCompatActivity {
     TextView tvUpload;
     ProgressBar pg;
     private String currentPhotoPath;
+    int countImgs = 0;
 
     //private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Image");
     private StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://mc-project-c7fbc.appspot.com");
@@ -170,11 +174,26 @@ public class CaptureActivity extends AppCompatActivity {
                         ImageModel model = new ImageModel(String.valueOf(uri));
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(user).child("reports");
-                        HashMap<String,String> images = new HashMap<>();
-                        images.put("image_uri", String.valueOf(uri));
+
+                        ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.exists()){
+                                    countImgs = (int) snapshot.getChildrenCount();
+                                    Log.i("tagcount","count " + countImgs);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        HashMap<String,Object> images = new HashMap<>();
+                        images.put("image_uri"+(countImgs), String.valueOf(uri));
                         //String modelID = ref.push().getKey();
                         Log.i("tagsuccess","reference " + String.valueOf(ref));
-                        ref.setValue(images).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        ref.updateChildren(images).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.i("tagsuccess","done ");

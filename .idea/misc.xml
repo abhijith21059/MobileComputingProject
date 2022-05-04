@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MCProject/app/src/main/res/layout/activity_report.xml" value="0.1265625" />
         <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MCProject/app/src/main/res/layout/fragment_add_med.xml" value="0.2" />
         <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MCProject/app/src/main/res/layout/fragment_medicine.xml" value="0.1265625" />
+        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MCProject/app/src/main/res/layout/report_iems.xml" value="0.12" />
+        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MCProject/app/src/main/res/layout/report_items.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.2947916666666667" />
