@@ -52,7 +52,7 @@ public class CaptureActivity extends AppCompatActivity {
     TextView tvUpload;
     ProgressBar pg;
     private String currentPhotoPath;
-    int countImgs = 0;
+    int countImgs = -1;
 
     //private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Image");
     private StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://mc-project-c7fbc.appspot.com");
@@ -66,7 +66,26 @@ public class CaptureActivity extends AppCompatActivity {
         tvUpload = findViewById(R.id.tvUpload);
         pg = findViewById(R.id.progressBar3);
 
+
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(user);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child("image_count").exists()){
+                    countImgs = dataSnapshot.child("image_count").getValue(Integer.class);
+                }
+                else{
+                    DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference().child("Patients").child(user).child("image_count");
+                    ref2.setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
         Log.i("tagsuccess","userid " + user);
 
 
@@ -88,6 +107,14 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStop() {
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(user).child("image_count");
+        ref.setValue(countImgs);
+        super.onStop();
     }
 
     @Override
@@ -189,10 +216,9 @@ public class CaptureActivity extends AppCompatActivity {
 
                             }
                         });
+
                         HashMap<String,Object> images = new HashMap<>();
                         images.put("image_uri"+(countImgs), String.valueOf(uri));
-                        //String modelID = ref.push().getKey();
-                        Log.i("tagsuccess","reference " + String.valueOf(ref));
                         ref.updateChildren(images).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -200,6 +226,8 @@ public class CaptureActivity extends AppCompatActivity {
                             }
                         });
                         tvUpload.setText("Your image has been upload!");
+
+
                     }
                 });
             }

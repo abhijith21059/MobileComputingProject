@@ -79,7 +79,7 @@ public class SosActivity extends AppCompatActivity {
                         smsbody.append("Help me out. This is my current location : \n");
                         smsbody.append(Uri.parse(address));
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:"+"7417580075"));
+                        callIntent.setData(Uri.parse("tel:"+"9491703763"));
                         ActivityCompat.requestPermissions(SosActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
                         startActivity(callIntent);
                         smsManager = SmsManager.getDefault();
