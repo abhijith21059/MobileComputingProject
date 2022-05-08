@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -106,6 +108,10 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 //        return inflater.inflate(R.layout.fragment_add_med, container, false);
 
         view= inflater.inflate(R.layout.fragment_add_med, container, false);
+
+//        Toolbar myToolbar1 = (Toolbar)view.findViewById(R.id.med_entry_toolbar);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar1);
+
         editMedName = (EditText)view.findViewById(R.id.edit_med_name);
         allDayCheckBox = (CheckBox)view.findViewById(R.id.all_day);
         sunCheckBox = (CheckBox)view.findViewById(R.id.dv_sunday);
