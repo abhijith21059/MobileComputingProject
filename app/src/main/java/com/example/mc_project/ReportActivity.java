@@ -32,14 +32,8 @@ public class ReportActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
-
-        recyclerViewReport = findViewById(R.id.recViewReports);
-        recyclerViewReport.setHasFixedSize(true);
-        recyclerViewReport.setLayoutManager(new LinearLayoutManager(this));
-
+    protected void onStart() {
+        super.onStart();
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(user).child("reports");
         listImg = new ArrayList<>();
@@ -63,6 +57,17 @@ public class ReportActivity extends AppCompatActivity {
         });
 
 
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_report);
+
+        recyclerViewReport = findViewById(R.id.recViewReports);
+        recyclerViewReport.setHasFixedSize(true);
+        recyclerViewReport.setLayoutManager(new LinearLayoutManager(this));
 
 //        TextView hello = findViewById(R.id.tvReport);
 //        hello.setText("IN REPORTS");

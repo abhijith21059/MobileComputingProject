@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/med_reminder_bg"
 
     tools:context=".MedicineFragment">
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/med_recycler_view"
@@ -15,11 +14,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/four_dp"
         android:layout_marginRight="@dimen/four_dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@drawable/med_reminder_bg"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/fragment_single_medicine" />
-
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
@@ -27,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
-        app:backgroundTint="#145B9A"
-        android:src="@drawable/ic_add"
         app:tint="@color/white"
-        app:fabSize="normal" />
+
+        android:src="@drawable/ic_add_1"
+        app:backgroundTint="#145B9A" />
 
 </FrameLayout>

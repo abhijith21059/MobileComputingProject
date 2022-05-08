@@ -21,4 +21,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_an_account_register_here">Create an account? Register here</string>
     <string name="hint_enter_med_name">Enter medicine name</string>
+    <string name="emergency_number">Emergency Number</string>
+    <string name="add_sos_contacts">Add SOS Contacts</string>
 </resources>
