@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -40,7 +42,9 @@ import java.util.Locale;
 
 public class AddMedFragment extends Fragment implements View.OnClickListener {
 
-    FloatingActionButton mAddFab1,mAddFab;
+    FloatingActionButton mAddFab1,mAddFab,mAddDosageFab;
+
+    LinearLayout linearLayout_list;
 
     private EditText editMedName;
     private CheckBox allDayCheckBox;
@@ -56,6 +60,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     int hour, minute;
 
     private EditText dosageText;
+
+    ImageView delete;
 
     Medicine med;
     Boolean[] days=new Boolean[7];
@@ -85,7 +91,6 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         mActivity = getActivity();
         mAddFab1=mActivity.findViewById(R.id.add_fab);
-        //mAddFab1.setImageResource(R.drawable.ic_done);
 
     }
 
@@ -93,7 +98,6 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         mAddFab1.setVisibility(View.VISIBLE);
-        //mAddFab1.setImageResource(R.drawable.ic_add);
     }
 
     @Override
@@ -104,13 +108,9 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_add_med, container, false);
-
         view= inflater.inflate(R.layout.fragment_add_med, container, false);
-
-//        Toolbar myToolbar1 = (Toolbar)view.findViewById(R.id.med_entry_toolbar);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar1);
 
         editMedName = (EditText)view.findViewById(R.id.edit_med_name);
         allDayCheckBox = (CheckBox)view.findViewById(R.id.all_day);
@@ -122,33 +122,33 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         friCheckBox = (CheckBox)view.findViewById(R.id.dv_friday);
         satCheckBox = (CheckBox)view.findViewById(R.id.dv_saturday);
 
+        linearLayout_list = view.findViewById(R.id.list);
+
+        mAddDosageFab = view.findViewById(R.id.add_dosage_fab);
+        mAddDosageFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addView();
+            }
+        });
+
         mAddFab=view.findViewById(R.id.done_fab);
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                save to database----to be done0
+//                save to database----to be done
                 savedata();
                 Toast.makeText(mActivity, "Medicine saved", Toast.LENGTH_SHORT).show();
                 mActivity.onBackPressed();
             }
         });
 
-        timeBtn = (Button)view.findViewById(R.id.timeButton);
-        dosageText = (EditText)view.findViewById(R.id.tv_dose_quantity);
 
         Log.e(DEBUG_TAG,"line 75");
 
-        timeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickTime(view);
-            }
-        });
 
-//        editMedName.addTextChangedListener(this);
         allDayCheckBox.setOnClickListener(this);
         Log.e(DEBUG_TAG,"line 79");
-//        allDayCheckBox.setOnCheckedChangeListener(this);
         sunCheckBox.setOnClickListener(this);
         monCheckBox.setOnClickListener(this);
         tueCheckBox.setOnClickListener(this);
@@ -162,17 +162,48 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    private void addView() {
+
+        final View dosage = getLayoutInflater().inflate(R.layout.add_time_dosage,null,false);
+
+        timeBtn = (Button)dosage.findViewById(R.id.timeButton);
+        dosageText = (EditText)dosage.findViewById(R.id.tv_dose_quantity);
+        delete = (ImageView)dosage.findViewById(R.id.delete_img);
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickTime(view);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeView(dosage);
+            }
+        });
+        linearLayout_list.addView(dosage);
+    }
+
+    private void removeView(View dosage) {
+
+        linearLayout_list.removeView(dosage);
+    }
+
     private void savedata() {
 
         String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
-
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
+//                if(!dataSnapshot.child("medicines").exists())
+                if(!dataSnapshot.exists()){
                     Log.i("DataSnapshot", "does not exists");
+//                    DatabaseReference ref3 = ref.child("medicines");
                 }
                 else {
                     Log.i("DataSnapshot", "exists");
@@ -186,24 +217,15 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                             Log.i("DataSnapshot", "checked till here 166");
 
                             med.setMedName(editMedName.getText().toString().trim());
-//                            Log.i("Dosagecheck","prinitng:"+dosageText.getText().toString());
                             med.setDosage(Float.parseFloat(dosageText.getText().toString()));
 
-//                med.setDays(new boolean[]{true,false,true,false,true,false,false});
 
                             List daylist = new ArrayList<Boolean>(Arrays.asList(days));
                             med.setDays(daylist);
 
                             ref2.setValue(med);
                             Log.i("DataSnapshot", "checked till here 169");
-//                medicineDataList.clear();
 
-//                for(DataSnapshot snapshot1:dataSnapshot.getChildren()){
-//                    Log.i("children","med available"+snapshot1.getValue().toString());
-//                    Medicine m=new Medicine(snapshot1.getValue().toString());
-//                    //medicineDataList.add(m);
-//                }
-//                medicineAdapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -229,7 +251,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_sunday:
                 if (checked) {
                     days[0] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[0] = false;
                     allDayCheckBox.setChecked(false);
@@ -239,7 +261,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_monday:
                 if (checked) {
                     days[1] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[1] = false;
                     allDayCheckBox.setChecked(false);
@@ -249,7 +271,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_tuesday:
                 if (checked) {
                     days[2] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[2] = false;
                     allDayCheckBox.setChecked(false);
@@ -259,7 +281,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_wednesday:
                 if (checked) {
                     days[3] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[3] = false;
                     allDayCheckBox.setChecked(false);
@@ -269,7 +291,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_thursday:
                 if (checked) {
                     days[4] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[4] = false;
                     allDayCheckBox.setChecked(false);
@@ -279,7 +301,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_friday:
                 if (checked) {
                     days[5] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[5] = false;
                     allDayCheckBox.setChecked(false);
@@ -289,7 +311,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_saturday:
                 if (checked) {
                     days[6] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[6] = false;
                     allDayCheckBox.setChecked(false);
