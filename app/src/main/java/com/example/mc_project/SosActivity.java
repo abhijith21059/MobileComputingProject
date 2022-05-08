@@ -22,12 +22,22 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class SosActivity extends AppCompatActivity {
 
     private SmsManager smsManager;
     private double latitude, longitude;
     private LocationListener mlocListener;
     private LocationManager locationManager;
+    private static ArrayList<String> phoneNumbers;
 
     class MyLocationListener implements LocationListener {
 
@@ -44,11 +54,34 @@ public class SosActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("emergency contacts");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    phoneNumbers.add(postSnapshot.child("phoneNumber").getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sos);
         TextView hello = findViewById(R.id.tvSos);
         hello.setText("IN EMERGENCY");
+        phoneNumbers = new ArrayList<>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -74,20 +107,31 @@ public class SosActivity extends AppCompatActivity {
                // smsbody.append("http://maps.google.com?q=");
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("SOS", "latitude" + latitude + "Longitude" + longitude);
                         String address = "http://maps.google.com/maps?saddr=" + latitude+","+longitude;
                         smsbody.append("Help me out. This is my current location : \n");
                         smsbody.append(Uri.parse(address));
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:"+"9491703763"));
+                        callIntent.setData(Uri.parse("tel:"+phoneNumbers.get(0)));
                         ActivityCompat.requestPermissions(SosActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
                         startActivity(callIntent);
                         smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage("9491703763", null, smsbody.toString(), null, null);
+                        for (int i = 1; i < phoneNumbers.size(); i++) {
+                            smsManager.sendTextMessage(phoneNumbers.get(i), null, smsbody.toString(), null, null);
+                        }
+                        Log.d("SOS", "onClick: "+phoneNumbers.size());
                         Toast.makeText(getApplicationContext(), "Message sent to the emergency contacts", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }, 3000);
+
+                    finish();
+
             }
         });
 

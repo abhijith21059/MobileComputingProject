@@ -1,9 +1,11 @@
 package com.example.mc_project;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,57 +15,38 @@ import com.google.android.gms.common.data.DataHolder;
 
 import java.util.ArrayList;
 
-public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.ViewHolder> {
-    ArrayList<String> data;
-    private OnNoteListener monNoteListener;
+public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.ReportViewHolder> {
 
-    public ContactsAdaptor(ArrayList<String> data, OnNoteListener onNoteListener) {
-        this.data = data;
-        this.monNoteListener = onNoteListener;
+    private Context myContext;
+    private ArrayList<String> contactsList;
+
+    public ContactsAdaptor(Context myContext, ArrayList<String> contactsList){
+        this.contactsList = contactsList;
+        this.myContext = myContext;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_design_contact, parent, false);
-
-        return new ViewHolder(view, monNoteListener);
+    public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View rootview = LayoutInflater.from(myContext).inflate(R.layout.row_design_contact, parent, false);
+        return new ReportViewHolder(rootview);
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
+        holder.txtView.setText(""+contactsList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return contactsList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView textView1;
-        OnNoteListener onNoteListener;
-
-        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+    public static class ReportViewHolder extends RecyclerView.ViewHolder{
+        TextView txtView;
+        public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.onNoteListener = onNoteListener;
-            Resources res = itemView.getResources();
-            Drawable shape = res.getDrawable(R.drawable.gradient_box);
-            textView1 = itemView.findViewById(R.id.titleView1);
-            textView1.setBackground(shape);
-
-            itemView.setOnClickListener(this);
-
+            txtView = itemView.findViewById(R.id.titleView1);
         }
-
-        @Override
-        public void onClick(View view) {
-            onNoteListener.onNoteClick(getAdapterPosition());
-        }
-    }
-
-    public interface OnNoteListener {
-        void onNoteClick(int position);
     }
 }
-

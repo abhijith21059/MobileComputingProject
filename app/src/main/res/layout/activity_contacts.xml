@@ -21,18 +21,22 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="90dp">
 
-    </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_contact"
-        android:layout_width="wrap_content"
+        android:layout_width="67dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="15dp"
+
         android:backgroundTint="#145B9A"
         android:src="@drawable/ic_add" />
+    </LinearLayout>
 
 
 </LinearLayout>
