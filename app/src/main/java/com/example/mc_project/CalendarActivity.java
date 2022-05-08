@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class CalendarActivity extends AppCompatActivity {
     int year;
     int hour;
     int min;
+    Button pickBut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class CalendarActivity extends AppCompatActivity {
         docNameEV = findViewById(R.id.docNameEV);
         decsEV = findViewById(R.id.descEV);
         locationEV = findViewById(R.id.locationEV);
+        pickBut = findViewById(R.id.pickTime);
         calendarView = findViewById(R.id.calendarView);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -90,6 +93,7 @@ public class CalendarActivity extends AppCompatActivity {
             {
                 hour = selectedHour;
                 min = selectedMinute;
+                pickBut.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, min));
             }
         };
 
