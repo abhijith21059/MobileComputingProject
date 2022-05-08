@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -51,9 +52,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         loginButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+//            startActivity();
+
+            Intent i = new Intent(getContext(), Dashborad.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+
+        } else {
+            // User is signed out
+            Log.d("TAG", "onAuthStateChanged:signed_out");
+
+        }
 
         return v;
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -85,15 +102,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         if (task.isSuccessful()) {
                             Log.d("LoginFragment.class", "onComplete: LOGIN SUCCESSFUL");
                             Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
-                            //Intent intent= new Intent(view.getContext(), MainActivity.class);
-                            startActivity(new Intent(getContext(), MainActivity.class));
+                            //START LOGIN DASHBOARD
+//                            startActivity(new Intent(getContext(), MainActivity.class));
+                            startActivity(new Intent(getContext(), Dashborad.class));
+                            getActivity().finish();
+
 
                         } else {
                             Log.d("LoginFragment.class", "onComplete: LOGIN UNSUCCESSFUL");
                             Toast.makeText(getContext(), "Unsuccessful Login: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+
                         }
                     }
                 });
+
                 break;
 
             case R.id.registerHere:
@@ -103,4 +126,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //todo--remove loader on back press from dashboard
 }

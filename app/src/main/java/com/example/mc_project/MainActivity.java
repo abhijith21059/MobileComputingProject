@@ -17,8 +17,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         logoutButton = findViewById(R.id.logout);
         logoutButton.setOnClickListener(this);
-        /*Intent intent = new Intent(getApplicationContext(), LoginRegistrationActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(getApplicationContext(), LoginRegistrationActivity.class);
+        startActivity(intent);
+//        finish();
     }
 
     @Override

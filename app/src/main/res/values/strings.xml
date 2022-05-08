@@ -11,7 +11,16 @@
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="registration">Registration</string>
+    <string name="Calendar">Calendar</string>
+    <string name="reports">Reports</string>
+    <string name="tracker">Activity Tracker</string>
+    <string name="sos">Sos</string>
+    <string name="reminder">Medi-reminder</string>
+    <string name="logout">logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_an_account_register_here">Create an account? Register here</string>
+    <string name="hint_enter_med_name">Enter medicine name</string>
+    <string name="emergency_number">Emergency Number</string>
+    <string name="add_sos_contacts">Add SOS Contacts</string>
 </resources>
