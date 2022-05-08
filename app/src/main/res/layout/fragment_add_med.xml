@@ -6,13 +6,16 @@
     android:fillViewport="true"
     android:id="@+id/fragment_container_addmed"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/med_reminder_bg"
     android:orientation="vertical">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="vertical">
+
 
 <!--        medicine name-->
         <androidx.cardview.widget.CardView
@@ -241,9 +244,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-            android:backgroundTint="#145B9A"
-
-            android:src="@drawable/ic_done"
+            app:backgroundTint="#FFFFFF"
+            android:src="@drawable/tick_1"
+            app:tint="#145B9A"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
