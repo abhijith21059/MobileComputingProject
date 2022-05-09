@@ -110,25 +110,12 @@ public class MedicineFragment extends Fragment {
     }
 
     private void medicineDataPrepare() {
-//        medicineDataList.clear();
-//        Medicine data= new Medicine();
-//        data.MedName+="1";
-//
-//        medicineDataList.add(data);
-//
-//        data= new Medicine();
-//        data.MedName+="2";
-//        medicineDataList.add(data);
-//
-//        data= new Medicine();
-//        data.MedName+="3";
-//        medicineDataList.add(data);
 
 
 
         //DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("medicine");
         String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicines");
 //        Toast.makeText(getContext(), "printing:"+ref.child("med1"), Toast.LENGTH_SHORT).show();
 //        uid=User.getUid()
 //        Toast.makeText(getContext(), "printing:"+User, Toast.LENGTH_SHORT).show();
@@ -151,9 +138,10 @@ public class MedicineFragment extends Fragment {
 
                     String x=snapshot1.child("medName").getValue().toString();
                     List y= (List) snapshot1.child("days").getValue();
-                    String dose = snapshot1.child("dosage").getValue().toString();
-                    String time_hr = snapshot1.child("hr").getValue().toString();
-                    String time_min = snapshot1.child("min").getValue().toString();
+                    List dose = (List) snapshot1.child("dosage").getValue();
+                    List time = (List) snapshot1.child("time").getValue();
+//                    String time_hr = snapshot1.child("hr").getValue().toString();
+//                    String time_min = snapshot1.child("min").getValue().toString();
 
 
 
@@ -170,9 +158,11 @@ public class MedicineFragment extends Fragment {
 
                     Medicine m=new Medicine(x.toString());
                     m.setDays(y);
-                    m.setDosage(Float.parseFloat(dose));
-                    m.setHr(Integer.parseInt(time_hr));
-                    m.setMin(Integer.parseInt(time_min));
+                    m.setDosage(dose);
+                    m.setTime(time);
+//                    m.setDosage(Float.parseFloat(dose));
+//                    m.setHr(Integer.parseInt(time_hr));
+//                    m.setMin(Integer.parseInt(time_min));
 
                     medicineDataList.add(m);
                 }

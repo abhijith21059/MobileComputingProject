@@ -19,6 +19,7 @@ public class MedHolder extends RecyclerView.ViewHolder {
     private final TextView mMedicine_dosage;
 
     private Medicine mMed;
+    String dosage_list="",time_list="";
     enum day_and_count {Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday};
 
     public MedHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -31,32 +32,30 @@ public class MedHolder extends RecyclerView.ViewHolder {
     }
 
 
-//    @Override
-//    public void onClick(View v) {
-//        Toast.makeText(getActivity(),mNews.getId()+" clicked!", Toast.LENGTH_SHORT).show();
-//
-//        DetailsFragment fragment = new DetailsFragment();
-//        Bundle args=new Bundle();
-//        args.putSerializable("News",mNews);
-//        fragment.setArguments(args);
-//
-//        SingleFragmentActivity s=(SingleFragmentActivity)v.getContext();
-//        FragmentManager fm =s.getSupportFragmentManager();
-//
-//        fm.beginTransaction()
-//                .replace(R.id.fragment_container, fragment)
-//                .addToBackStack(null)
-//                .commit();
-//    }
 
     public void bind(Medicine med) {
         mMed = med;
-
+        dosage_list="";
+        time_list="";
         mMedicineName_Text.setText(mMed.getMedName());
-        mMedicine_dosage.setText("Dosage: "+Float.toString(mMed.getDosage()));
-        Log.i("Dosagecheck","prinitng:"+Float.toString(mMed.getDosage()));
-        mMedicine_clockTime.setText("Time: "+Integer.toString(mMed.getHr())+":"+Integer.toString(mMed.getMin()));
-        Log.i("Timecheck","prinitng:"+Integer.toString(mMed.getHr())+":"+Integer.toString(mMed.getMin()));
+//        mMedicine_dosage.setText("Dosage: "+Float.toString(mMed.getDosage()));
+//        Log.i("Dosagecheck","prinitng:"+Float.toString(mMed.getDosage()));
+//        mMedicine_clockTime.setText("Time: "+Integer.toString(mMed.getHr())+":"+Integer.toString(mMed.getMin()));
+//        Log.i("Timecheck","prinitng:"+Integer.toString(mMed.getHr())+":"+Integer.toString(mMed.getMin()));
+
+        int length=mMed.getDosage().size();
+        System.out.println("Length="+length);
+        for(int i=0; i<length-1; i++){
+            dosage_list+=mMed.getDosage().get(i)+", ";
+            time_list+=mMed.getTime().get(i)+", ";
+        }
+        dosage_list+=mMed.getDosage().get(length-1);
+        System.out.println("Dosage List: "+dosage_list);
+        System.out.println("Time List: "+time_list);
+        time_list+=mMed.getTime().get(length-1);
+        mMedicine_dosage.setText(dosage_list);
+        mMedicine_clockTime.setText(time_list);
+
 
         List<Boolean> k = mMed.getDays();
         int i=0;

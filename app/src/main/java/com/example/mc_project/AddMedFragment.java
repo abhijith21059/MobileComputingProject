@@ -3,6 +3,7 @@ package com.example.mc_project;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.provider.AlarmClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +70,9 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
     Medicine med;
     Boolean[] days=new Boolean[7];
-    int nchild;
+    List<String> times=new ArrayList<String>();
+    List<Float> dosages=new ArrayList<Float>();
+    int nchild,medCount=0;
 
     private String DEBUG_TAG="AddMedFragment";
     private View view;
@@ -112,6 +119,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_add_med, container, false);
 
+        med = new Medicine();
+
         editMedName = (EditText)view.findViewById(R.id.edit_med_name);
         allDayCheckBox = (CheckBox)view.findViewById(R.id.all_day);
         sunCheckBox = (CheckBox)view.findViewById(R.id.dv_sunday);
@@ -136,9 +145,13 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                save to database----to be done
+
                 savedata();
+
                 Toast.makeText(mActivity, "Medicine saved", Toast.LENGTH_SHORT).show();
+
+                //set alarm--to be done
+
                 mActivity.onBackPressed();
             }
         });
@@ -157,7 +170,6 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         friCheckBox.setOnClickListener(this);
         satCheckBox.setOnClickListener(this);
 
-        med = new Medicine();
 
         return view;
     }
@@ -170,6 +182,30 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         dosageText = (EditText)dosage.findViewById(R.id.tv_dose_quantity);
         delete = (ImageView)dosage.findViewById(R.id.delete_img);
 
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String txt = dosageText.getText().toString();
+                if(!txt.isEmpty())
+                    dosages.add(Float.parseFloat(txt));
+                else
+                    dosages.add(0.0f);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        dosageText.addTextChangedListener(textWatcher);
+
+
         timeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,62 +216,188 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("LIne 222: "+linearLayout_list.indexOfChild(dosage));
+                int pos=linearLayout_list.indexOfChild(dosage);
+
+                int len=Math.max(dosages.size(),times.size());
+                if(len>pos) {
+                    if (dosages.size() == times.size() && dosages.size() != 0) {
+                        dosages.remove(pos);
+                        times.remove(pos);
+                    } else if (dosages.size() > times.size())
+                        dosages.remove(pos);
+                    else if (dosages.size() < times.size())
+                        times.remove(pos);
+                }
                 removeView(dosage);
+
             }
         });
+//        System.out.println("Time: "+timeBtn.getText().toString());
+//        System.out.println("Dosage: "+dosageText.getText().toString());
         linearLayout_list.addView(dosage);
+
     }
 
     private void removeView(View dosage) {
-
         linearLayout_list.removeView(dosage);
     }
 
     private void savedata() {
 
         String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User);
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(!dataSnapshot.child("medicines").exists())
-                if(!dataSnapshot.exists()){
+                if(!dataSnapshot.child("medicines").exists()){
+//                if(!dataSnapshot.exists()){
                     Log.i("DataSnapshot", "does not exists");
-//                    DatabaseReference ref3 = ref.child("medicines");
+                    med.setMedName(editMedName.getText().toString().trim());
+                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+med.getMedName());
+                    medCount++;
+//                    med.setMedName(editMedName.getText().toString().trim());
+                    med.setDosage(dosages);
+                    med.setTime(times);
+
+                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+                    med.setDays(daylist);
+                    ref3.setValue(med);
+
+                    Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                    List<Float> d = med.getDosage();
+                    List<String> t = med.getTime();
+                    List<Boolean> days_set = med.getDays();
+                    ArrayList<Integer> alarm_days = new ArrayList<Integer>();
+
+                    for(int i=0;i<7;i++){
+                        if(days_set.get(i)){
+                            switch(i){
+                                case 0: alarm_days.add(Calendar.SUNDAY);
+                                    break;
+                                case 1: alarm_days.add(Calendar.MONDAY);
+                                    break;
+                                case 2: alarm_days.add(Calendar.TUESDAY);
+                                    break;
+                                case 3: alarm_days.add(Calendar.WEDNESDAY);
+                                    break;
+                                case 4: alarm_days.add(Calendar.THURSDAY);
+                                    break;
+                                case 5: alarm_days.add(Calendar.FRIDAY);
+                                    break;
+                                case 6: alarm_days.add(Calendar.SATURDAY);
+                                    break;
+
+                            }
+                        }
+
+                    }
+                    String hr_min[] = t.get(0).split(":");
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take medicine "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
+                    intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
+                    intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        mActivity.startActivity(intent);
+                    }
                 }
-                else {
+                else{
                     Log.i("DataSnapshot", "exists");
-                    nchild = (int) dataSnapshot.getChildrenCount()+1;
+                    medCount = (int) dataSnapshot.child("medicines").getChildrenCount();
+                    med.setMedName(editMedName.getText().toString().trim());
+                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+med.getMedName());
+                    medCount++;
 
-                    DatabaseReference ref2 = ref.child("med" + Integer.toString(nchild));
+//                    med.setMedName(editMedName.getText().toString().trim());
+                    med.setDosage(dosages);
+                    med.setTime(times);
 
-                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.i("DataSnapshot", "checked till here 166");
+                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+                    med.setDays(daylist);
+                    ref3.setValue(med);
 
-                            med.setMedName(editMedName.getText().toString().trim());
-                            med.setDosage(Float.parseFloat(dosageText.getText().toString()));
+                    System.out.println(mActivity);
+                    Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                    List<Float> d = med.getDosage();
+                    List<String> t = med.getTime();
+                    List<Boolean> days_set = med.getDays();
+                    ArrayList<Integer> alarm_days = new ArrayList<Integer>();
 
+                    for(int i=0;i<7;i++){
+                        if(days_set.get(i)){
+                            switch(i){
+                                case 0: alarm_days.add(Calendar.SUNDAY);
+                                        break;
+                                case 1: alarm_days.add(Calendar.MONDAY);
+                                        break;
+                                case 2: alarm_days.add(Calendar.TUESDAY);
+                                        break;
+                                case 3: alarm_days.add(Calendar.WEDNESDAY);
+                                        break;
+                                case 4: alarm_days.add(Calendar.THURSDAY);
+                                        break;
+                                case 5: alarm_days.add(Calendar.FRIDAY);
+                                        break;
+                                case 6: alarm_days.add(Calendar.SATURDAY);
+                                        break;
 
-                            List daylist = new ArrayList<Boolean>(Arrays.asList(days));
-                            med.setDays(daylist);
-
-                            ref2.setValue(med);
-                            Log.i("DataSnapshot", "checked till here 169");
-
+                            }
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                    String hr_min[] = t.get(0).split(":");
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take medicine "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
+                    intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
+                    intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        mActivity.startActivity(intent);
+                    }
 
-                        }
-                    });
 
-
+//                    nchild = (int) dataSnapshot.getChildrenCount()+1;
+//                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+nchild);
+//                    med.setMedName(editMedName.getText().toString().trim());
+//                    med.setDosage(dosages);
+//                    med.setTime(times);
+//
+//                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+//                    med.setDays(daylist);
+//                    ref3.setValue(med);
                 }
+//                else {
+//                    Log.i("DataSnapshot", "exists");
+//                    nchild = (int) dataSnapshot.getChildrenCount()+1;
+//
+//                    DatabaseReference ref2 = ref.child("med" + Integer.toString(nchild));
+//
+//                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            Log.i("DataSnapshot", "checked till here 166");
+//
+//                            med.setMedName(editMedName.getText().toString().trim());
+//                            med.setDosage(Float.parseFloat(dosageText.getText().toString()));
+//
+//
+//                            List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+//                            med.setDays(daylist);
+//
+//                            ref2.setValue(med);
+//                            Log.i("DataSnapshot", "checked till here 169");
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//
+//
+//                }
             }
 
             @Override
@@ -342,12 +504,15 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                 hour = selectedHour;
                 minute = selectedMinute;
                 timeBtn.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-                med.setHr(hour);
-                med.setMin(minute);
+//                hrs.add(hour);
+//                mins.add(minute);
+                String s = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+                times.add(s);
+//                med.setHr(hour);
+//                med.setMin(minute);
             }
         };
 
-        // int style = AlertDialog.THEME_HOLO_DARK;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(mActivity, /*style,*/ onTimeSetListener, hour, minute, true);
 
