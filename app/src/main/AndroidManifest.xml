@@ -27,12 +27,26 @@
             android:name=".TrackerActivity"
             android:exported="false" />
         <activity
+            android:name=".ContactsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReportActivity"
             android:exported="false"
             />
         <activity
+            android:name=".AddContact"
+            android:exported="false"
+            />
+
+        <activity
             android:name=".CalendarActivity"
-            android:exported="true" />
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.INSERT" />
+            <data android:mimeType="vnd.android.cursor.dir/event" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".Dashborad"
             android:exported="true">
