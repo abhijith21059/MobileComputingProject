@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ public class SosActivity extends AppCompatActivity {
     private LocationListener mlocListener;
     private LocationManager locationManager;
     private static ArrayList<String> phoneNumbers;
+    private ProgressBar pb;
 
     class MyLocationListener implements LocationListener {
 
@@ -79,8 +82,7 @@ public class SosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sos);
-        TextView hello = findViewById(R.id.tvSos);
-        hello.setText("IN EMERGENCY");
+        pb = findViewById(R.id.progressBarContacts);
         phoneNumbers = new ArrayList<>();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -89,9 +91,9 @@ public class SosActivity extends AppCompatActivity {
         builder.setMessage("Are you sure?");
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing but close the dialog
+                pb.setVisibility(View.VISIBLE);
                 if (ContextCompat.checkSelfPermission(SosActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(SosActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(SosActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                 }
@@ -127,17 +129,17 @@ public class SosActivity extends AppCompatActivity {
                             }
                             Log.d("SOS", "onClick: " + phoneNumbers.size());
                             Toast.makeText(getApplicationContext(), "Message sent to the emergency contacts", Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "No emergency contacts available", Toast.LENGTH_SHORT).show();
                         }
                         dialog.dismiss();
+
                     }
                 }, 1000);
-
-                    finish();
-
             }
         });
+
 
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
@@ -152,5 +154,8 @@ public class SosActivity extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+
     }
+
+
 }
