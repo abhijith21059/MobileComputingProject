@@ -15,38 +15,57 @@ import com.google.android.gms.common.data.DataHolder;
 
 import java.util.ArrayList;
 
-public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.ReportViewHolder> {
+public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.ContactsViewHolder> {
 
     private Context myContext;
-    private ArrayList<String> contactsList;
+    private ArrayList<String> contactnames;
+    private OnNoteListener monNoteListener;
+    private ArrayList<String> contactNumbers;
 
-    public ContactsAdaptor(Context myContext, ArrayList<String> contactsList){
-        this.contactsList = contactsList;
+    public ContactsAdaptor(Context myContext, ArrayList<String> contactsList, OnNoteListener onNoteListener, ArrayList<String> contactNumbers){
+        this.contactnames = contactsList;
         this.myContext = myContext;
+        this.monNoteListener = onNoteListener;
+        this.contactNumbers = contactNumbers;
+    }
+    public ContactsAdaptor(ArrayList<String> contactsList, ArrayList<String> contactNumbers){
+        this.contactnames = contactsList;
+        this.contactNumbers = contactNumbers;
     }
 
     @NonNull
     @Override
-    public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootview = LayoutInflater.from(myContext).inflate(R.layout.row_design_contact, parent, false);
-        return new ReportViewHolder(rootview);
+        return new ContactsViewHolder(rootview, monNoteListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
-        holder.txtView.setText(""+contactsList.get(position));
+    public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
+        holder.txtView.setText(""+contactnames.get(position)+ " : "+contactNumbers.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return contactsList.size();
+        return contactnames.size();
     }
 
-    public static class ReportViewHolder extends RecyclerView.ViewHolder{
+    public static class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView txtView;
-        public ReportViewHolder(@NonNull View itemView) {
+        OnNoteListener onNoteListener;
+        public ContactsViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
+            this.onNoteListener = onNoteListener;
             txtView = itemView.findViewById(R.id.titleView1);
+            itemView.setOnClickListener(this);
         }
+        @Override
+        public void onClick(View view) {
+            onNoteListener.onNoteClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnNoteListener {
+        void onNoteClick(int position);
     }
 }

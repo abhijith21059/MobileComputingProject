@@ -25,9 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ContactsActivity extends AppCompatActivity  {
+public class ContactsActivity extends AppCompatActivity  implements ContactsAdaptor.OnNoteListener {
     private RecyclerView recyclerView;
     private ArrayList<String> dataHolders;
+    private ArrayList<String> contactNumbers;
     private FloatingActionButton addContact;
 
 
@@ -39,21 +40,26 @@ public class ContactsActivity extends AppCompatActivity  {
         dataHolders = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         addContact = (FloatingActionButton)findViewById(R.id.add_contact);
+        contactNumbers = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setNestedScrollingEnabled(true);
         String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("emergency contacts");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataHolders.clear();
+                contactNumbers.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Log.d("ContactsActivity.java", "Snapspt children: "+postSnapshot.child("name").getValue(String.class));
+                    Log.d("ContactsActivity.java", "Snapspt children: "+postSnapshot.child("phoneNumber").getValue(String.class));
                    // ContactModel cm = new ContactModel(postSnapshot.child("name").getValue(String.class), postSnapshot.child("phoneNumber").getValue(String.class));
                     dataHolders.add(postSnapshot.child("name").getValue(String.class));
+                    contactNumbers.add(postSnapshot.child("phoneNumber").getValue(String.class));
                 }
                 Log.d("ContactsActivity.class", "Size: "+dataHolders.size());
 
-                recyclerView.setAdapter(new ContactsAdaptor(getApplicationContext(), dataHolders));
+                recyclerView.setAdapter(new ContactsAdaptor(getApplicationContext(), dataHolders, ContactsActivity.this, contactNumbers));
 
             }
 
@@ -72,6 +78,16 @@ public class ContactsActivity extends AppCompatActivity  {
             }
         });
     }
+    @Override
+    public void onNoteClick(int position) {
+        Bundle args = new Bundle();
+        Intent i = new Intent(ContactsActivity.this, EditContacts.class);
+        args.putString("name", dataHolders.get(position));
+        args.putString("number", contactNumbers.get(position));
+        i.putExtras(args);
+        startActivity(i);
+    }
+
 
 
 }

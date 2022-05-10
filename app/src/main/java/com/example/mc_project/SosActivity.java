@@ -117,18 +117,22 @@ public class SosActivity extends AppCompatActivity {
                         smsbody.append("Help me out. This is my current location : \n");
                         smsbody.append(Uri.parse(address));
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:"+phoneNumbers.get(0)));
-                        ActivityCompat.requestPermissions(SosActivity.this, new String[] {Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
-                        startActivity(callIntent);
-                        smsManager = SmsManager.getDefault();
-                        for (int i = 1; i < phoneNumbers.size(); i++) {
-                            smsManager.sendTextMessage(phoneNumbers.get(i), null, smsbody.toString(), null, null);
+                        if (!phoneNumbers.isEmpty()) {
+                            callIntent.setData(Uri.parse("tel:" + phoneNumbers.get(0)));
+                            ActivityCompat.requestPermissions(SosActivity.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.CALL_PHONE}, PackageManager.PERMISSION_GRANTED);
+                            startActivity(callIntent);
+                            smsManager = SmsManager.getDefault();
+                            for (int i = 1; i < phoneNumbers.size(); i++) {
+                                smsManager.sendTextMessage(phoneNumbers.get(i), null, smsbody.toString(), null, null);
+                            }
+                            Log.d("SOS", "onClick: " + phoneNumbers.size());
+                            Toast.makeText(getApplicationContext(), "Message sent to the emergency contacts", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No emergency contacts available", Toast.LENGTH_SHORT).show();
                         }
-                        Log.d("SOS", "onClick: "+phoneNumbers.size());
-                        Toast.makeText(getApplicationContext(), "Message sent to the emergency contacts", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
-                }, 3000);
+                }, 1000);
 
                     finish();
 

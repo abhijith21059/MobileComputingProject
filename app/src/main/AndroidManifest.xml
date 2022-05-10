@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MC_Project">
         <activity
+            android:name=".EditContacts"
+            android:exported="false" />
+        <activity
             android:name=".AddContact"
             android:exported="false" />
         <activity
