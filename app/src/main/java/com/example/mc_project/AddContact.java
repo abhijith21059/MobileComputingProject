@@ -59,6 +59,7 @@ public class AddContact extends AppCompatActivity {
                         ref1.setValue(emergencyContacts);
 
                         Toast.makeText(AddContact.this, "Successfully added emergency contact ", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                     @Override

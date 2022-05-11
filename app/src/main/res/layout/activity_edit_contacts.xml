@@ -54,5 +54,14 @@
         android:layout_marginTop="50dp"
         android:text="Update" />
 
+    <Button
+        android:id="@+id/delButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="50dp"
+        android:text="Delete Contact" />
+
+
 
 </LinearLayout>

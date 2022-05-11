@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class EditContacts extends AppCompatActivity {
     private EditText editName, editNumber;
-    private Button updateButton;
+    private Button updateButton, delButton;
     String name;
     ArrayList<ContactModel> emergencyContacts;
     String number;
@@ -33,6 +33,7 @@ public class EditContacts extends AppCompatActivity {
         editName = findViewById(R.id.contactName);
         editNumber = findViewById(R.id.number);
         updateButton = findViewById(R.id.button);
+        delButton = findViewById(R.id.delButton);
         emergencyContacts = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -74,6 +75,39 @@ public class EditContacts extends AppCompatActivity {
                     }
                 });
             }
+        });
+
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("emergency contacts");
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
+                            if (Objects.requireNonNull(postSnapshot.child("name").getValue(String.class)).equalsIgnoreCase(name)) {
+                                postSnapshot.getRef().removeValue();
+                            } else {
+                                ContactModel cm = new ContactModel(postSnapshot.child("name").getValue(String.class), postSnapshot.child("phoneNumber").getValue(String.class));
+                                emergencyContacts.add(cm);
+                            }
+                        }
+
+                        ref.setValue(emergencyContacts);
+
+                        Toast.makeText(EditContacts.this, "Successfully updated emergency contact ", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(EditContacts.this, "Fail to update data " + error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
         });
     }
 }
