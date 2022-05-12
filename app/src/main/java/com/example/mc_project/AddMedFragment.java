@@ -1,6 +1,10 @@
 package com.example.mc_project;
 
+import static android.content.Context.ALARM_SERVICE;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +67,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
     private Button timeBtn;
     int hour, minute;
+
+    Boolean isSetDosage=true,isSetTime=true;
 
     private EditText dosageText;
 
@@ -137,7 +143,8 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         mAddDosageFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addView();
+                if(isSetTime==true && isSetDosage==true)
+                    addView();
             }
         });
 
@@ -178,6 +185,10 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
         final View dosage = getLayoutInflater().inflate(R.layout.add_time_dosage,null,false);
 
+//        int pos=linearLayout_list.indexOfChild(dosage); ///***
+//        System.out.println("LIne 182: "+linearLayout_list.indexOfChild(dosage));
+        isSetTime=false;
+        isSetDosage=false;
         timeBtn = (Button)dosage.findViewById(R.id.timeButton);
         dosageText = (EditText)dosage.findViewById(R.id.tv_dose_quantity);
         delete = (ImageView)dosage.findViewById(R.id.delete_img);
@@ -191,10 +202,16 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String txt = dosageText.getText().toString();
-                if(!txt.isEmpty())
-                    dosages.add(Float.parseFloat(txt));
-                else
-                    dosages.add(0.0f);
+                if(!txt.isEmpty() && Float.parseFloat(txt) >0.0 && !txt.equals("Dosage")) {
+                    dosages.add(Float.parseFloat(txt)); ///***
+//                    dosages.add(pos,Float.parseFloat(txt));
+                    isSetDosage=true;
+                }
+                else {
+                    Toast.makeText(mActivity, "Enter dosage", Toast.LENGTH_SHORT).show();
+//                    dosages.add(0.0f); ///***
+//                    dosages.add(pos,0.0f);
+                }
             }
 
             @Override
@@ -233,14 +250,16 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-//        System.out.println("Time: "+timeBtn.getText().toString());
-//        System.out.println("Dosage: "+dosageText.getText().toString());
+        System.out.println("Time: "+timeBtn.getText().toString());
+        System.out.println("Dosage: "+dosageText.getText().toString());
         linearLayout_list.addView(dosage);
 
     }
 
     private void removeView(View dosage) {
         linearLayout_list.removeView(dosage);
+        isSetDosage=true;
+        isSetTime=true;
     }
 
     private void savedata() {
@@ -299,6 +318,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                     intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
                     intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
                     intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
                     if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
                         mActivity.startActivity(intent);
                     }
@@ -348,56 +368,17 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
                     }
                     String hr_min[] = t.get(0).split(":");
-                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take medicine "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take "+med.getMedName());
                     intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
                     intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
                     intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
                     if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
                         mActivity.startActivity(intent);
                     }
 
-
-//                    nchild = (int) dataSnapshot.getChildrenCount()+1;
-//                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+nchild);
-//                    med.setMedName(editMedName.getText().toString().trim());
-//                    med.setDosage(dosages);
-//                    med.setTime(times);
-//
-//                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
-//                    med.setDays(daylist);
-//                    ref3.setValue(med);
                 }
-//                else {
-//                    Log.i("DataSnapshot", "exists");
-//                    nchild = (int) dataSnapshot.getChildrenCount()+1;
-//
-//                    DatabaseReference ref2 = ref.child("med" + Integer.toString(nchild));
-//
-//                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            Log.i("DataSnapshot", "checked till here 166");
-//
-//                            med.setMedName(editMedName.getText().toString().trim());
-//                            med.setDosage(Float.parseFloat(dosageText.getText().toString()));
-//
-//
-//                            List daylist = new ArrayList<Boolean>(Arrays.asList(days));
-//                            med.setDays(daylist);
-//
-//                            ref2.setValue(med);
-//                            Log.i("DataSnapshot", "checked till here 169");
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//
-//
-//                }
+
             }
 
             @Override
@@ -495,6 +476,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
     public void pickTime(View view)
     {
+        System.out.println("No time: "+timeBtn.getText().toString());
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
         {
             @Override
@@ -507,7 +489,13 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 //                hrs.add(hour);
 //                mins.add(minute);
                 String s = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
-                times.add(s);
+                if(!timeBtn.getText().toString().equals("Set Time")) {
+                    times.add(s);
+                    isSetTime=true;
+                }
+                else{
+                    Toast.makeText(mActivity, "Set time", Toast.LENGTH_SHORT).show();
+                }
 //                med.setHr(hour);
 //                med.setMin(minute);
             }

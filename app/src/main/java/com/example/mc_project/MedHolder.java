@@ -50,9 +50,9 @@ public class MedHolder extends RecyclerView.ViewHolder {
             time_list+=mMed.getTime().get(i)+", ";
         }
         dosage_list+=mMed.getDosage().get(length-1);
+        time_list+=mMed.getTime().get(length-1);
         System.out.println("Dosage List: "+dosage_list);
         System.out.println("Time List: "+time_list);
-        time_list+=mMed.getTime().get(length-1);
         mMedicine_dosage.setText(dosage_list);
         mMedicine_clockTime.setText(time_list);
 
