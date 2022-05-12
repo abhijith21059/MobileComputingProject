@@ -17,7 +17,9 @@
         <entry key="app/src/main/res/drawable/rounded_bg.xml" value="0.1915" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.1915" />
         <entry key="app/src/main/res/drawable/rounded_cal.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/rounded_capture.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/rounded_report.xml" value="0.156" />
         <entry key="app/src/main/res/drawable/rounded_text.xml" value="0.1915" />
         <entry key="app/src/main/res/layout/activity_add_contact.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.22198883056640628" />
@@ -38,7 +40,7 @@
         <entry key="app/src/main/res/layout/fragment_medicine.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/fragment_single_medicine.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/report_items.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/report_items.xml" value="0.25" />
         <entry key="app/src/main/res/layout/row_design_contact.xml" value="0.1" />
       </map>
     </option>

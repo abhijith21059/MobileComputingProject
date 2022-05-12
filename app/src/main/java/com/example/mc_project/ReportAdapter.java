@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
         Glide.with(myContext).load(imgList.get(position)).into(holder.imgView);
+
     }
 
     @Override
@@ -43,9 +45,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     public static class ReportViewHolder extends RecyclerView.ViewHolder{
         ImageView imgView;
+        TextView tvreport;
         public ReportViewHolder(@NonNull View itemView) {
             super(itemView);
             imgView = itemView.findViewById(R.id.imgViewRep);
+            tvreport = itemView.findViewById(R.id.reportId);
+            tvreport.setText("Report");
+
         }
     }
 }

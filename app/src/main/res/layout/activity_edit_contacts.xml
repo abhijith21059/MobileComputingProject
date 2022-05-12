@@ -61,7 +61,7 @@
 
 
         <EditText
-            android:id="@+id/fullname"
+            android:id="@+id/contactName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -89,7 +89,7 @@
 
 
         <EditText
-            android:id="@+id/contactNumber"
+            android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
