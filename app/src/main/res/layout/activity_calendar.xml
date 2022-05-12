@@ -10,11 +10,11 @@
     >
 
 
+
     <TextView
         android:id="@+id/tvHello"
         android:layout_width="249dp"
         android:layout_height="38dp"
-        android:fontFamily="@font/amaranth"
         android:gravity="center"
         android:text="Add Appointments"
         android:textColor="#FFFFFF"
@@ -78,22 +78,18 @@
         app:layout_constraintTop_toBottomOf="@+id/descEV"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/button"
-        android:layout_width="161dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/backgroung_btn"
-        android:backgroundTint="#3949AB"
-        android:fontFamily="@font/amaranth"
-        android:onClick="onSaveEvent"
         android:text="Save"
-        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationEV"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.515"
+        android:onClick="onSaveEvent"/>
 
     <CalendarView
         android:id="@+id/calendarView"
@@ -113,7 +109,6 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/amaranth"
         android:text="Select Date"
         android:textColor="#FFFFFF"
         android:textSize="25dp"
@@ -124,21 +119,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/pickTime"
-        android:layout_width="161dp"
-        android:layout_height="45dp"
-        android:background="@drawable/backgroung_btn"
-        android:backgroundTint="#3949AB"
-        android:fontFamily="@font/amaranth"
-
-        android:onClick="pickTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Pick Time"
-        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.576" />
+        app:layout_constraintVertical_bias="0.576"
+        android:onClick="pickTime"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
