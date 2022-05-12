@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Dashborad extends AppCompatActivity  {
     private Button logoutButton;
@@ -21,6 +23,7 @@ public class Dashborad extends AppCompatActivity  {
     private CardView cardTracker;
     private CardView cardContacts;
     private FirebaseAuth mfirebaseAuth;
+    private TextView textViewUN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +36,9 @@ public class Dashborad extends AppCompatActivity  {
         cardTracker = findViewById(R.id.cardTracker);
         cardContacts = findViewById(R.id.cardContacts);
         logoutButton = findViewById(R.id.logoutButton);
-//        logoutButton.setOnClickListener(this);
         mfirebaseAuth = FirebaseAuth.getInstance();
+
+
 
         cardCalendar.setOnClickListener(new View.OnClickListener() {
                 @Override

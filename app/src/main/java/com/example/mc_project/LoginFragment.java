@@ -56,6 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (user != null) {
             // User is signed in
 //            startActivity();
+//            Log.i("Hellooo----->",user.);
 
             Intent i = new Intent(getContext(), Dashborad.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
