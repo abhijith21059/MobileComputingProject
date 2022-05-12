@@ -7,9 +7,13 @@
     tools:context=".SosActivity">
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/phone_call" />
+        android:layout_width="263dp"
+        android:layout_height="224dp"
+        android:layout_marginTop="96dp"
+        android:src="@drawable/phone_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBarContacts"

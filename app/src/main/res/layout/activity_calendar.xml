@@ -10,11 +10,11 @@
     >
 
 
-
     <TextView
         android:id="@+id/tvHello"
         android:layout_width="249dp"
         android:layout_height="38dp"
+        android:fontFamily="@font/amaranth"
         android:gravity="center"
         android:text="Add Appointments"
         android:textColor="#FFFFFF"
@@ -31,12 +31,13 @@
         android:layout_width="316dp"
         android:layout_height="45dp"
         android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="Doctor Name"
         android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/amaranth"
+        android:hint="Doctor Name"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
+        android:textColorHint="#B9B9B9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
@@ -48,12 +49,15 @@
         android:id="@+id/descEV"
         android:layout_width="316dp"
         android:layout_height="45dp"
-        android:ems="10"
-        android:hint="Description"
         android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/amaranth"
+        android:hint="Description"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
+        android:textColorHint="#B9B9B9"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
@@ -65,12 +69,13 @@
         android:id="@+id/locationEV"
         android:layout_width="316dp"
         android:layout_height="45dp"
-        android:ems="10"
         android:backgroundTint="@color/white"
-        android:textColorHint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/amaranth"
         android:hint="Location"
         android:inputType="textPersonName"
         android:textColor="#FFFFFF"
+        android:textColorHint="#B9B9B9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
@@ -78,32 +83,38 @@
         app:layout_constraintTop_toBottomOf="@+id/descEV"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/backgroung_btn"
+        android:backgroundTint="#3949AB"
+        android:fontFamily="@font/amaranth"
+        android:onClick="onSaveEvent"
         android:text="Save"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationEV"
-        app:layout_constraintVertical_bias="0.515"
-        android:onClick="onSaveEvent"/>
+        app:layout_constraintVertical_bias="0.515" />
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="440dp"
-        android:layout_height="356dp"
-        android:theme="@style/CalenderViewCustom"
+
+        android:layout_width="359dp"
+        android:layout_height="316dp"
+        android:background="@drawable/rounded_cal"
         android:dateTextAppearance="@style/CalenderViewDateCustomText"
+
+        android:theme="@style/CalenderViewCustom"
         android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
         app:layout_constraintBottom_toTopOf="@+id/tvHello"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <TextView
         android:id="@+id/textView4"
@@ -117,18 +128,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.022"
+        android:fontFamily="@font/amaranth" />
 
     <Button
         android:id="@+id/pickTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/backgroung_btn"
+        android:backgroundTint="#3949AB"
+        android:fontFamily="@font/amaranth"
+        android:onClick="pickTime"
         android:text="Pick Time"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.576"
-        android:onClick="pickTime"/>
+        app:layout_constraintVertical_bias="0.576" />
 </androidx.constraintlayout.widget.ConstraintLayout>

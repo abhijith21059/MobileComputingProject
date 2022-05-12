@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/rounded_bg.xml" value="0.1915" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/rounded_cal.xml" value="0.1955" />
         <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.1915" />
         <entry key="app/src/main/res/drawable/rounded_text.xml" value="0.1915" />
         <entry key="app/src/main/res/layout/activity_add_contact.xml" value="0.19895833333333332" />
