@@ -60,6 +60,10 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
 
         fitnessData = new FitnessData();
         checkPermissions();
+        circularProgressBar = findViewById(R.id.circularProgressBar);
+
+        circularProgressBar.setProgressBarColorDirection(CircularProgressBar.GradientDirection.RIGHT_TO_LEFT);
+        circularProgressBar.setProgressMax(1000f);
 
     }
 
@@ -171,9 +175,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
                                 fitnessData.steps = Float.parseFloat(new DecimalFormat("#.##").format(value + fitnessData.steps));
 //                                step_count
                                 circularProgressBar.setProgress(fitnessData.steps);
-                                circularProgressBar.setProgressBarColorDirection(CircularProgressBar.GradientDirection.RIGHT_TO_LEFT);
-                                circularProgressBar.setProgressMax(1000f);
-//                                txt.setText("Steps: "+fitnessData.steps);
+                                txt.setText("Steps: "+fitnessData.steps);
                             }
                         }
                 );
@@ -269,6 +271,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
 
                 if (field.getName().equals(Field.FIELD_STEPS.getName())) {
                     fitnessData.steps = Float.parseFloat(new DecimalFormat("#.##").format(value));
+                    circularProgressBar.setProgress(fitnessData.steps);
                     txt.setText("Steps: "+fitnessData.steps);
                 } else if (field.getName().equals(Field.FIELD_CALORIES.getName())) {
                     fitnessData.calories = Float.parseFloat(new DecimalFormat("#.##").format(value));
@@ -303,6 +306,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
             }
         }
 //        activityMainBinding.setFitnessData(fitnessDataResponseModel);
+        circularProgressBar.setProgress(fitnessData.steps);
         txt.setText("Steps: "+fitnessData.steps);
     }
 }
