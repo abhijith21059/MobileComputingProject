@@ -289,18 +289,16 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logoutButton"
-                android:layout_width="278dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
 
 
-                android:layout_alignParentBottom="true"
                 android:layout_marginStart="66dp"
                 android:layout_marginTop="37dp"
                 android:layout_marginEnd="67dp"
-                android:layout_marginBottom="31dp"
                 android:background="@drawable/backgroung_btn"
                 android:backgroundTint="#145B9A"
                 android:fontFamily="@font/amaranth"
@@ -309,10 +307,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
