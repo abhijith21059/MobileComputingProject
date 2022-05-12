@@ -34,7 +34,7 @@ public class AddContact extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
         name = findViewById(R.id.fullname);
         contact = findViewById(R.id.contactNumber);
-        submit = findViewById(R.id.submitButton);
+        submit = findViewById(R.id.buttonSubmit);
         emergencyContacts = new ArrayList<>();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

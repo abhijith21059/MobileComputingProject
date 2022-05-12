@@ -42,7 +42,8 @@ public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.Contac
 
     @Override
     public void onBindViewHolder(@NonNull ContactsViewHolder holder, int position) {
-        holder.txtView.setText(""+contactnames.get(position)+ " : "+contactNumbers.get(position));
+        holder.txtView1.setText(""+contactnames.get(position));
+        holder.txtView2.setText(""+contactNumbers.get(position));
     }
 
     @Override
@@ -51,12 +52,13 @@ public class ContactsAdaptor extends RecyclerView.Adapter<ContactsAdaptor.Contac
     }
 
     public static class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView txtView;
+        TextView txtView1, txtView2;
         OnNoteListener onNoteListener;
         public ContactsViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             this.onNoteListener = onNoteListener;
-            txtView = itemView.findViewById(R.id.titleView1);
+            txtView1 = itemView.findViewById(R.id.titleView1);
+            txtView2 = itemView.findViewById(R.id.titleView2);
             itemView.setOnClickListener(this);
         }
         @Override

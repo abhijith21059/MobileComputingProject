@@ -23,4 +23,5 @@
     <string name="hint_enter_med_name">Enter medicine name</string>
     <string name="emergency_number">Emergency Number</string>
     <string name="add_sos_contacts">Add SOS Contacts</string>
+    <string name="emergency_contact_information">Emergency Contact Information</string>
 </resources>
