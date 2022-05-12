@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/med_reminder_bg"
+
+    tools:context=".MedicineFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/med_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/four_dp"
+        android:layout_marginRight="@dimen/four_dp"
+        android:background="@drawable/med_reminder_bg"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_single_medicine" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15dp"
+        app:tint="@color/white"
+
+        android:src="@drawable/ic_add_1"
+        app:backgroundTint="#145B9A" />
+
+</FrameLayout>

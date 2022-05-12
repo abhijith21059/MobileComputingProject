@@ -10,9 +10,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Dashborad extends AppCompatActivity  {
     private Button logoutButton;
-    private CardView cardCalendar,cardReports,cardReminder,cardSos,cardTracker;
+    private CardView cardCalendar;
+    private CardView cardReports;
+    private CardView cardReminder;
+    private CardView cardSos;
+    private CardView cardTracker;
+    private CardView cardContacts;
+    private FirebaseAuth mfirebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,8 +31,10 @@ public class Dashborad extends AppCompatActivity  {
         cardReminder= findViewById(R.id.cardReminder);
         cardSos = findViewById(R.id.cardSos);
         cardTracker = findViewById(R.id.cardTracker);
+        cardContacts = findViewById(R.id.cardContacts);
         logoutButton = findViewById(R.id.logoutButton);
 //        logoutButton.setOnClickListener(this);
+        mfirebaseAuth = FirebaseAuth.getInstance();
 
         cardCalendar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,9 +78,16 @@ public class Dashborad extends AppCompatActivity  {
                }
            }
         );
+        cardContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Dashborad.this, ContactsActivity.class));
+            }
+        });
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mfirebaseAuth.signOut();
                 startActivity(new Intent(Dashborad.this,LoginRegistrationActivity.class));
 
             }

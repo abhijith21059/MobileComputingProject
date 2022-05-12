@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/profile_bg"
+    android:background="@drawable/dash_bg"
     tools:context=".Dashborad">
 
     <LinearLayout
@@ -31,6 +31,7 @@
                 android:layout_marginTop="33dp"
                 android:layout_marginEnd="67dp"
                 android:layout_toStartOf="@+id/ivUser"
+                android:fontFamily="@font/amaranth"
                 android:text="My Dashboard"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -44,6 +45,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/amaranth"
                 android:text="hello User!" />
 
             <ImageView
@@ -242,6 +244,42 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardContacts"
+
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_columnWeight="1"
+                app:layout_rowWeight="1"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="12dp"
+                android:layout_margin="12dp"
+                >
+                <LinearLayout
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="73dp"
+                        android:layout_height="66dp"
+                        android:src="@drawable/add_contact" />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/add_sos_contacts"
+                        android:textSize="16sp"
+                        android:textColor="#3949AB"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.gridlayout.widget.GridLayout>
 
@@ -251,13 +289,15 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/logoutButton"
-                android:layout_width="278dp"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+
+
+                android:layout_marginStart="66dp"
                 android:layout_marginTop="37dp"
-
-
                 android:layout_marginEnd="67dp"
                 android:background="@drawable/backgroung_btn"
                 android:backgroundTint="#145B9A"
@@ -267,11 +307,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                app:layout_constraintStart_toStartOf="parent" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+

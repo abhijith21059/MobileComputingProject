@@ -3,27 +3,45 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_login_registration.xml" value="0.12395833333333334" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/activity_main.xml" value="0.2708333333333333" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/fragment_login.xml" value="0.12395833333333334" />
-        <entry key="..\:/Users/Aman's Laptop/AndroidStudioProjects/MobileComputingProject/app/src/main/res/layout/fragment_registration.xml" value="0.264" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.206" />
-        <entry key="app/src/main/res/drawable/background_linear.xml" value="0.206" />
-        <entry key="app/src/main/res/drawable/backgroung_btn.xml" value="0.206" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1945" />
+        <entry key="app/src/main/res/drawable/background_linear.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/backgroung_btn.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/button_orange.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/gradient_box.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/ic_add_1.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_photo.xml" value="0.1945" />
+        <entry key="app/src/main/res/drawable/ic_email.xml" value="0.1945" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.206" />
-        <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_dashborad.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.1945" />
+        <entry key="app/src/main/res/drawable/rounded_bg.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/rounded_cal.xml" value="0.1955" />
+        <entry key="app/src/main/res/drawable/rounded_capture.xml" value="0.156" />
+        <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.1915" />
+        <entry key="app/src/main/res/drawable/rounded_report.xml" value="0.156" />
+        <entry key="app/src/main/res/drawable/rounded_text.xml" value="0.1915" />
+        <entry key="app/src/main/res/layout/activity_add_contact.xml" value="0.19895833333333332" />
+        <entry key="app/src/main/res/layout/activity_calendar.xml" value="0.22198883056640628" />
+        <entry key="app/src/main/res/layout/activity_capture.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_contacts.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_dashborad.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_edit_contacts.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_login_registration.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_report.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_sos.xml" value="0.18206521739130435" />
-        <entry key="app/src/main/res/layout/activity_tracker.xml" value="0.18206521739130435" />
+        <entry key="app/src/main/res/layout/activity_reminder.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_report.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_sos.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/activity_tracker.xml" value="0.13451086956521738" />
+        <entry key="app/src/main/res/layout/fragment_add_med.xml" value="0.25936599423631124" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_medicine.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_single_medicine.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/report_items.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/row_design_contact.xml" value="0.1" />
       </map>
     </option>
   </component>

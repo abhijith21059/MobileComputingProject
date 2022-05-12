@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationFragment">
+    tools:context=".RegistrationFragment"
+    >
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -18,7 +19,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
         >
 
         <EditText
@@ -159,6 +159,9 @@
             android:layout_marginBottom="10dp"
             android:background="#8F3949AB" />
 
+
+
+
         <EditText
             android:id="@+id/address"
             android:layout_width="match_parent"
@@ -178,7 +181,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/city"
             app:layout_constraintVertical_bias="0.092"
             tools:ignore="TouchTargetSizeCheck" />
         <View
@@ -300,7 +303,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerButton"
-        app:layout_constraintVertical_bias="0.228" />
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
