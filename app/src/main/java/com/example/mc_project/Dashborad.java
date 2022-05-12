@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Dashborad extends AppCompatActivity  {
@@ -88,6 +91,12 @@ public class Dashborad extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 mfirebaseAuth.signOut();
+
+                GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(getApplicationContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
+                googleSignInClient.signOut();
+                googleSignInClient.revokeAccess();
+
+
                 startActivity(new Intent(Dashborad.this,LoginRegistrationActivity.class));
 
             }
