@@ -19,6 +19,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
 
     private Context myContext;
     private ArrayList<String> imgList;
+    TextView tvreport;
 
     public ReportAdapter(Context myContext, ArrayList<String> imgList){
         this.imgList = imgList;
@@ -35,6 +36,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportView
     @Override
     public void onBindViewHolder(@NonNull ReportViewHolder holder, int position) {
         Glide.with(myContext).load(imgList.get(position)).into(holder.imgView);
+//        tvreport.setText("Report: "+position+1);
 
     }
 

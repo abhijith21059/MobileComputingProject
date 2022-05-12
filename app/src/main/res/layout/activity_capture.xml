@@ -10,6 +10,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         android:orientation="vertical"
         android:background="@drawable/med_reminder_bg"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,15 +50,15 @@
         <ProgressBar
             android:id="@+id/progressBar3"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="275dp"
-            android:layout_height="35dp"
+            android:layout_width="251dp"
+            android:layout_height="39dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:layout_marginStart="104dp"
-            android:layout_marginEnd="103dp"
-            android:layout_marginBottom="35dp" />
+            android:layout_marginStart="79dp"
+            android:layout_marginEnd="81dp"
+            android:layout_marginBottom="34dp" />
 
     </RelativeLayout>
 
