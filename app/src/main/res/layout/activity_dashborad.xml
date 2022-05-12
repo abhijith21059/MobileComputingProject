@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/profile_bg"
+    android:background="@drawable/dash_bg"
     tools:context=".Dashborad">
 
     <LinearLayout
@@ -31,6 +31,7 @@
                 android:layout_marginTop="33dp"
                 android:layout_marginEnd="67dp"
                 android:layout_toStartOf="@+id/ivUser"
+                android:fontFamily="@font/amaranth"
                 android:text="My Dashboard"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -44,6 +45,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="33dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/amaranth"
                 android:text="hello User!" />
 
             <ImageView
