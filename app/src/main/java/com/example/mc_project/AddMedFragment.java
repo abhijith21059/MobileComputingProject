@@ -1,8 +1,13 @@
 package com.example.mc_project;
 
+import static android.content.Context.ALARM_SERVICE;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.provider.AlarmClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,13 +44,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 
 public class AddMedFragment extends Fragment implements View.OnClickListener {
 
-    FloatingActionButton mAddFab1,mAddFab;
+    FloatingActionButton mAddFab1,mAddFab,mAddDosageFab;
+
+    LinearLayout linearLayout_list;
 
     private EditText editMedName;
     private CheckBox allDayCheckBox;
@@ -55,11 +68,17 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     private Button timeBtn;
     int hour, minute;
 
+    Boolean isSetDosage=true,isSetTime=true;
+
     private EditText dosageText;
+
+    ImageView delete;
 
     Medicine med;
     Boolean[] days=new Boolean[7];
-    int nchild;
+    List<String> times=new ArrayList<String>();
+    List<Float> dosages=new ArrayList<Float>();
+    int nchild,medCount=0;
 
     private String DEBUG_TAG="AddMedFragment";
     private View view;
@@ -85,7 +104,6 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         mActivity = getActivity();
         mAddFab1=mActivity.findViewById(R.id.add_fab);
-        //mAddFab1.setImageResource(R.drawable.ic_done);
 
     }
 
@@ -93,7 +111,6 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         mAddFab1.setVisibility(View.VISIBLE);
-        //mAddFab1.setImageResource(R.drawable.ic_add);
     }
 
     @Override
@@ -104,13 +121,11 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_add_med, container, false);
 
+        // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_add_med, container, false);
 
-//        Toolbar myToolbar1 = (Toolbar)view.findViewById(R.id.med_entry_toolbar);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar1);
+        med = new Medicine();
 
         editMedName = (EditText)view.findViewById(R.id.edit_med_name);
         allDayCheckBox = (CheckBox)view.findViewById(R.id.all_day);
@@ -122,33 +137,38 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         friCheckBox = (CheckBox)view.findViewById(R.id.dv_friday);
         satCheckBox = (CheckBox)view.findViewById(R.id.dv_saturday);
 
+        linearLayout_list = view.findViewById(R.id.list);
+
+        mAddDosageFab = view.findViewById(R.id.add_dosage_fab);
+        mAddDosageFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isSetTime==true && isSetDosage==true)
+                    addView();
+            }
+        });
+
         mAddFab=view.findViewById(R.id.done_fab);
         mAddFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                save to database----to be done0
+
                 savedata();
+
                 Toast.makeText(mActivity, "Medicine saved", Toast.LENGTH_SHORT).show();
+
+                //set alarm--to be done
+
                 mActivity.onBackPressed();
             }
         });
 
-        timeBtn = (Button)view.findViewById(R.id.timeButton);
-        dosageText = (EditText)view.findViewById(R.id.tv_dose_quantity);
 
         Log.e(DEBUG_TAG,"line 75");
 
-        timeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pickTime(view);
-            }
-        });
 
-//        editMedName.addTextChangedListener(this);
         allDayCheckBox.setOnClickListener(this);
         Log.e(DEBUG_TAG,"line 79");
-//        allDayCheckBox.setOnCheckedChangeListener(this);
         sunCheckBox.setOnClickListener(this);
         monCheckBox.setOnClickListener(this);
         tueCheckBox.setOnClickListener(this);
@@ -157,63 +177,208 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
         friCheckBox.setOnClickListener(this);
         satCheckBox.setOnClickListener(this);
 
-        med = new Medicine();
 
         return view;
+    }
+
+    private void addView() {
+
+        final View dosage = getLayoutInflater().inflate(R.layout.add_time_dosage,null,false);
+
+//        int pos=linearLayout_list.indexOfChild(dosage); ///***
+//        System.out.println("LIne 182: "+linearLayout_list.indexOfChild(dosage));
+        isSetTime=false;
+        isSetDosage=false;
+        timeBtn = (Button)dosage.findViewById(R.id.timeButton);
+        dosageText = (EditText)dosage.findViewById(R.id.tv_dose_quantity);
+        delete = (ImageView)dosage.findViewById(R.id.delete_img);
+
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String txt = dosageText.getText().toString();
+                if(!txt.isEmpty() && Float.parseFloat(txt) >0.0 && !txt.equals("Dosage")) {
+                    dosages.add(Float.parseFloat(txt)); ///***
+//                    dosages.add(pos,Float.parseFloat(txt));
+                    isSetDosage=true;
+                }
+                else {
+                    Toast.makeText(mActivity, "Enter dosage", Toast.LENGTH_SHORT).show();
+//                    dosages.add(0.0f); ///***
+//                    dosages.add(pos,0.0f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        dosageText.addTextChangedListener(textWatcher);
+
+
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickTime(view);
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("LIne 222: "+linearLayout_list.indexOfChild(dosage));
+                int pos=linearLayout_list.indexOfChild(dosage);
+
+                int len=Math.max(dosages.size(),times.size());
+                if(len>pos) {
+                    if (dosages.size() == times.size() && dosages.size() != 0) {
+                        dosages.remove(pos);
+                        times.remove(pos);
+                    } else if (dosages.size() > times.size())
+                        dosages.remove(pos);
+                    else if (dosages.size() < times.size())
+                        times.remove(pos);
+                }
+                removeView(dosage);
+
+            }
+        });
+        System.out.println("Time: "+timeBtn.getText().toString());
+        System.out.println("Dosage: "+dosageText.getText().toString());
+        linearLayout_list.addView(dosage);
+
+    }
+
+    private void removeView(View dosage) {
+        linearLayout_list.removeView(dosage);
+        isSetDosage=true;
+        isSetTime=true;
     }
 
     private void savedata() {
 
         String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
-
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicine");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Patients").child(User);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
+                if(!dataSnapshot.child("medicines").exists()){
+//                if(!dataSnapshot.exists()){
                     Log.i("DataSnapshot", "does not exists");
+                    med.setMedName(editMedName.getText().toString().trim());
+                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+med.getMedName());
+                    medCount++;
+//                    med.setMedName(editMedName.getText().toString().trim());
+                    med.setDosage(dosages);
+                    med.setTime(times);
+
+                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+                    med.setDays(daylist);
+                    ref3.setValue(med);
+
+                    Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                    List<Float> d = med.getDosage();
+                    List<String> t = med.getTime();
+                    List<Boolean> days_set = med.getDays();
+                    ArrayList<Integer> alarm_days = new ArrayList<Integer>();
+
+                    for(int i=0;i<7;i++){
+                        if(days_set.get(i)){
+                            switch(i){
+                                case 0: alarm_days.add(Calendar.SUNDAY);
+                                    break;
+                                case 1: alarm_days.add(Calendar.MONDAY);
+                                    break;
+                                case 2: alarm_days.add(Calendar.TUESDAY);
+                                    break;
+                                case 3: alarm_days.add(Calendar.WEDNESDAY);
+                                    break;
+                                case 4: alarm_days.add(Calendar.THURSDAY);
+                                    break;
+                                case 5: alarm_days.add(Calendar.FRIDAY);
+                                    break;
+                                case 6: alarm_days.add(Calendar.SATURDAY);
+                                    break;
+
+                            }
+                        }
+
+                    }
+                    String hr_min[] = t.get(0).split(":");
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take medicine "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
+                    intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
+                    intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+                    if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        mActivity.startActivity(intent);
+                    }
                 }
-                else {
+                else{
                     Log.i("DataSnapshot", "exists");
-                    nchild = (int) dataSnapshot.getChildrenCount()+1;
+                    medCount = (int) dataSnapshot.child("medicines").getChildrenCount();
+                    med.setMedName(editMedName.getText().toString().trim());
+                    DatabaseReference ref3 = ref.child("medicines").child("medicine_"+med.getMedName());
+                    medCount++;
 
-                    DatabaseReference ref2 = ref.child("med" + Integer.toString(nchild));
+//                    med.setMedName(editMedName.getText().toString().trim());
+                    med.setDosage(dosages);
+                    med.setTime(times);
 
-                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.i("DataSnapshot", "checked till here 166");
+                    List daylist = new ArrayList<Boolean>(Arrays.asList(days));
+                    med.setDays(daylist);
+                    ref3.setValue(med);
 
-                            med.setMedName(editMedName.getText().toString().trim());
-//                            Log.i("Dosagecheck","prinitng:"+dosageText.getText().toString());
-                            med.setDosage(Float.parseFloat(dosageText.getText().toString()));
+                    System.out.println(mActivity);
+                    Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+                    List<Float> d = med.getDosage();
+                    List<String> t = med.getTime();
+                    List<Boolean> days_set = med.getDays();
+                    ArrayList<Integer> alarm_days = new ArrayList<Integer>();
 
-//                med.setDays(new boolean[]{true,false,true,false,true,false,false});
+                    for(int i=0;i<7;i++){
+                        if(days_set.get(i)){
+                            switch(i){
+                                case 0: alarm_days.add(Calendar.SUNDAY);
+                                        break;
+                                case 1: alarm_days.add(Calendar.MONDAY);
+                                        break;
+                                case 2: alarm_days.add(Calendar.TUESDAY);
+                                        break;
+                                case 3: alarm_days.add(Calendar.WEDNESDAY);
+                                        break;
+                                case 4: alarm_days.add(Calendar.THURSDAY);
+                                        break;
+                                case 5: alarm_days.add(Calendar.FRIDAY);
+                                        break;
+                                case 6: alarm_days.add(Calendar.SATURDAY);
+                                        break;
 
-                            List daylist = new ArrayList<Boolean>(Arrays.asList(days));
-                            med.setDays(daylist);
-
-                            ref2.setValue(med);
-                            Log.i("DataSnapshot", "checked till here 169");
-//                medicineDataList.clear();
-
-//                for(DataSnapshot snapshot1:dataSnapshot.getChildren()){
-//                    Log.i("children","med available"+snapshot1.getValue().toString());
-//                    Medicine m=new Medicine(snapshot1.getValue().toString());
-//                    //medicineDataList.add(m);
-//                }
-//                medicineAdapter.notifyDataSetChanged();
+                            }
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
+                    }
+                    String hr_min[] = t.get(0).split(":");
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
+                    intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
+                    intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
+                    intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+                    if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        mActivity.startActivity(intent);
+                    }
 
                 }
+
             }
 
             @Override
@@ -229,7 +394,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_sunday:
                 if (checked) {
                     days[0] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[0] = false;
                     allDayCheckBox.setChecked(false);
@@ -239,7 +404,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_monday:
                 if (checked) {
                     days[1] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[1] = false;
                     allDayCheckBox.setChecked(false);
@@ -249,7 +414,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_tuesday:
                 if (checked) {
                     days[2] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[2] = false;
                     allDayCheckBox.setChecked(false);
@@ -259,7 +424,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_wednesday:
                 if (checked) {
                     days[3] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[3] = false;
                     allDayCheckBox.setChecked(false);
@@ -269,7 +434,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_thursday:
                 if (checked) {
                     days[4] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[4] = false;
                     allDayCheckBox.setChecked(false);
@@ -279,7 +444,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_friday:
                 if (checked) {
                     days[5] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[5] = false;
                     allDayCheckBox.setChecked(false);
@@ -289,7 +454,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
             case R.id.dv_saturday:
                 if (checked) {
                     days[6] = true;
-                    view1.setBackgroundColor(Color.parseColor("#FF03DAC5"));
+                    view1.setBackgroundColor(Color.parseColor("#FF338CDC"));
                 } else {
                     days[6] = false;
                     allDayCheckBox.setChecked(false);
@@ -311,6 +476,7 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
     public void pickTime(View view)
     {
+        System.out.println("No time: "+timeBtn.getText().toString());
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
         {
             @Override
@@ -320,12 +486,21 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                 hour = selectedHour;
                 minute = selectedMinute;
                 timeBtn.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-                med.setHr(hour);
-                med.setMin(minute);
+//                hrs.add(hour);
+//                mins.add(minute);
+                String s = String.format(Locale.getDefault(), "%02d:%02d", hour, minute);
+                if(!timeBtn.getText().toString().equals("Set Time")) {
+                    times.add(s);
+                    isSetTime=true;
+                }
+                else{
+                    Toast.makeText(mActivity, "Set time", Toast.LENGTH_SHORT).show();
+                }
+//                med.setHr(hour);
+//                med.setMin(minute);
             }
         };
 
-        // int style = AlertDialog.THEME_HOLO_DARK;
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(mActivity, /*style,*/ onTimeSetListener, hour, minute, true);
 

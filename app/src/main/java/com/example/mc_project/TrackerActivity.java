@@ -171,8 +171,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
                                 fitnessData.steps = Float.parseFloat(new DecimalFormat("#.##").format(value + fitnessData.steps));
 //                                step_count
                                 circularProgressBar.setProgress(fitnessData.steps);
-                                circularProgressBar.setProgressBarColorDirection(CircularProgressBar.GradientDirection.RIGHT_TO_LEFT);
-                                circularProgressBar.setProgressMax(1000f);
+
 //                                txt.setText("Steps: "+fitnessData.steps);
                             }
                         }
