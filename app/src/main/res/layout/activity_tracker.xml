@@ -104,4 +104,38 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/btnWalk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Stop"
+        app:layout_constraintTop_toBottomOf="@id/activityTracker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textOff="Let's go!"
+        android:textOn="Stop"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:enabled="false"/>
+
+    <TextView
+        android:id="@+id/txtHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btnWalk"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#FFFFFF"
+        android:text="sdfghjlk;"/>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/bargraph"
+        app:layout_constraintTop_toBottomOf="@id/txtHistory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
