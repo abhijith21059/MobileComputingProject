@@ -314,13 +314,18 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
 
                     }
                     String hr_min[] = t.get(0).split(":");
-                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take medicine "+med.getMedName());
+                    intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Take "+med.getMedName());
                     intent.putExtra(AlarmClock.EXTRA_HOUR, Integer.parseInt(hr_min[0]));
                     intent.putExtra(AlarmClock.EXTRA_MINUTES, Integer.parseInt(hr_min[1]));
                     intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
                     intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
                     if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        System.out.println("Here at line 323");
                         mActivity.startActivity(intent);
+                    }
+                    else{
+                        System.out.println("Here at line 327");
+                        Toast.makeText(mActivity, "Alarm not set. Incompatible with clock app", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
@@ -374,7 +379,12 @@ public class AddMedFragment extends Fragment implements View.OnClickListener {
                     intent.putExtra(AlarmClock.EXTRA_DAYS, alarm_days);
                     intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
                     if(intent.resolveActivity(mActivity.getPackageManager())!=null) {
+                        System.out.println("Here at line 381");
                         mActivity.startActivity(intent);
+                    }
+                    else{
+                        System.out.println("Here at line 386");
+                        Toast.makeText(mActivity, "Alarm not set. Uncompatible with clock app", Toast.LENGTH_SHORT).show();
                     }
 
                 }
