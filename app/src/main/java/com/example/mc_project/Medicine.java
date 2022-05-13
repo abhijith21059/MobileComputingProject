@@ -6,8 +6,9 @@ import java.util.List;
 public class Medicine {
     private String MedName;
     private List<Boolean> days;
-    private int hr,min;
-    private float dosage;
+//    private List<Integer> hr,min;
+    private List<String> time;
+    private List<Float> dosage;
 
     public Medicine(){
         MedName="medicine ";
@@ -23,37 +24,69 @@ public class Medicine {
         return MedName;
     }
 
-    public int getHr() {
-        return hr;
-    }
-
-    public void setHr(int hr) {
-        this.hr = hr;
-    }
-
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public float getDosage() {
-        return dosage;
-    }
-
-    public void setDosage(float dosage) {
-        this.dosage = dosage;
-    }
-//    public String getPatient_email() {
-//        return patient_email;
-//    }
-
     public void setMedName(String medName) {
         MedName = medName;
     }
 
+
+//
+//    public List<Integer> getHr() {
+//        return hr;
+//    }
+//
+//    public void setHr(List<Integer> hr) {
+//        this.hr = hr;
+//    }
+//
+//    public List<Integer> getMin() {
+//        return min;
+//    }
+//
+//    public void setMin(List<Integer> min) {
+//        this.min = min;
+//    }
+
+
+    public List<String> getTime() {
+        return time;
+    }
+
+    public void setTime(List<String> time) {
+        this.time = time;
+    }
+
+    public List<Float> getDosage() {
+        return dosage;
+    }
+
+    public void setDosage(List<Float> dosage) {
+        this.dosage = dosage;
+    }
+
+//
+//    public List getHr() {
+//        return hr;
+//    }
+//
+//    public void setHr(List hr) {
+//        this.hr = hr;
+//    }
+//
+//    public List getMin() {
+//        return min;
+//    }
+//
+//    public void setMin(int min) {
+//        this.min = min;
+//    }
+//
+//    public List getDosage() {
+//        return dosage;
+//    }
+//
+//    public void setDosage(float dosage) {
+//        this.dosage = dosage;
+//    }
 
     public void setDays(List days) {
         this.days = days;

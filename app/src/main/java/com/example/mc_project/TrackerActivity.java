@@ -73,8 +73,8 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
         txt = findViewById(R.id.activityTracker);
         calTxt = findViewById(R.id.calTracker);
         distTxt = findViewById(R.id.distTracker);
-        historyTxt = findViewById(R.id.txtHistory);
-        txt.setText("IN TRACKER");
+//        historyTxt = findViewById(R.id.txtHistory);
+        txt.setText("Step Count");
 
         barChart = (BarChart) findViewById(R.id.bargraph);
 
@@ -101,6 +101,8 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
             }
         });
 
+        requestForHistory();
+
         ArrayList<BarEntry> barEntries=new ArrayList<>();
         ArrayList<String> dates=new ArrayList<>();;
         barEntries.add(new BarEntry(0,0));
@@ -113,6 +115,8 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
         barChart.getXAxis().setTextColor(Color.WHITE);
         barChart.setVisibleXRangeMaximum(7);
         barChart.getDescription().setText("Weekly step count");
+
+
     }
 
     private void unsubscribe(DataType dataType) {
@@ -203,7 +207,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
     private void startDataReading() {
         Toast.makeText(this, "inside start data reading", Toast.LENGTH_SHORT).show();
         getTodayData();
-        requestForHistory();
+//        requestForHistory();
         subscribeAndGetRealTimeData(DataType.TYPE_STEP_COUNT_DELTA);
         subscribeAndGetRealTimeData(DataType.TYPE_CALORIES_EXPENDED);
         subscribeAndGetRealTimeData(DataType.TYPE_DISTANCE_DELTA);
@@ -242,7 +246,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
 //                                float activity = Float.parseFloat(dataPoint.getValue(Field.FIELD_ACTIVITY).toString());
                                     fitnessData.steps = Float.parseFloat(new DecimalFormat("#.##").format(value + fitnessData.steps));
                                     circularProgressBar.setProgress(fitnessData.steps);
-                                    txt.setText("Steps: " + fitnessData.steps);
+                                    txt.setText("Steps: " + (int)fitnessData.steps);
                                 }
                             }
                     );
@@ -258,7 +262,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
                                 public void onDataPoint(@NonNull DataPoint dataPoint) {
                                     float cal = Float.parseFloat(dataPoint.getValue(Field.FIELD_CALORIES).toString());
                                     fitnessData.calories = Float.parseFloat(new DecimalFormat("#.##").format(cal));
-                                    calTxt.setText("Steps: " + fitnessData.calories);
+                                    calTxt.setText(""+ fitnessData.calories);
                                 }
                             }
                     );
@@ -274,7 +278,7 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
                                 public void onDataPoint(@NonNull DataPoint dataPoint) {
                                     float dist = Float.parseFloat(dataPoint.getValue(Field.FIELD_DISTANCE).toString());
                                     fitnessData.distance = Float.parseFloat(new DecimalFormat("#.##").format(dist + fitnessData.distance));
-                                    distTxt.setText("Steps: " + fitnessData.distance);
+                                    distTxt.setText("Steps: " + (int)fitnessData.distance);
                                 }
                             }
                     );
@@ -338,13 +342,13 @@ public class TrackerActivity extends AppCompatActivity implements OnSuccessListe
                 if (field.getName().equals(FIELD_STEPS.getName())) {
                     fitnessData.steps = Float.parseFloat(new DecimalFormat("#.##").format(value));
                     circularProgressBar.setProgress(fitnessData.steps);
-                    txt.setText("Steps: "+fitnessData.steps);
+                    txt.setText("Steps: "+(int)fitnessData.steps);
                 } else if (field.getName().equals(Field.FIELD_CALORIES.getName())) {
                     fitnessData.calories = Float.parseFloat(new DecimalFormat("#.##").format(value));
-                    calTxt.setText("Calories: "+fitnessData.calories);
+                    calTxt.setText(""+fitnessData.calories);
                 } else if (field.getName().equals(Field.FIELD_DISTANCE.getName())) {
                     fitnessData.distance = Float.parseFloat(new DecimalFormat("#.##").format(value/1000));
-                    distTxt.setText("Distance: "+fitnessData.distance+" km");
+                    distTxt.setText(""+fitnessData.distance+" km");
                 }
 
             }

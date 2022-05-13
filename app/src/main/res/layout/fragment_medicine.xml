@@ -8,6 +8,8 @@
 
     tools:context=".MedicineFragment">
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/med_recycler_view"
         android:layout_width="match_parent"
@@ -17,6 +19,16 @@
         android:background="@drawable/med_reminder_bg"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/fragment_single_medicine" />
+
+    <TextView
+        android:id="@+id/TVmssg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click on + to add medicines!"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"

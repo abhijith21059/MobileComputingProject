@@ -96,8 +96,14 @@
                     android:id="@+id/all_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
+                    android:buttonTint="#FF338CDC"
+
                     android:text="All Days" />
+<!--<<<<<<< HEAD-->
+<!--                    android:fontFamily="sans-serif-light"-->
+<!--=======-->
+<!--&gt;>>>>>> 3a6f5eb3b3799a223b752c6f5ca6d052c78dfb26-->
+
 
                 <LinearLayout
                     android:id="@+id/checkbox_layout"
@@ -219,38 +225,27 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+
                 <LinearLayout
+                    android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/timeButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#145B9A"
-                        android:fontFamily="sans-serif-light"
-                        android:padding="20dp"
-                        android:text="Set Time"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/tv_dose_quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif-light"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:text="1.0" />
+                    android:orientation="vertical">
 
                 </LinearLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/add_dosage_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_add_1"
+                    app:backgroundTint="#FFFFFF"
+                    app:fabSize="mini"
+                    app:tint="#145B9A" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -262,7 +257,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
             app:backgroundTint="#FFFFFF"
-            android:src="@drawable/tick_1"
+            android:src="@drawable/ic_baseline_done_24"
             app:tint="#145B9A"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
