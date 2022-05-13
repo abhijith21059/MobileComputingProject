@@ -83,6 +83,7 @@ public class MedicineFragment extends Fragment {
 
         Log.i(DEBUG_TAG, "line 48" );
         medicineAdapter=new MedicineAdapter(medicineDataList);
+        messageDisplay();
 
         Log.i(DEBUG_TAG, "line 50" );
         mMedRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
@@ -118,13 +119,15 @@ public class MedicineFragment extends Fragment {
 
                     @Override
                     public void onDismissed(Snackbar snackbar, int event) {
-                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+//                        if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                            if (event != Snackbar.Callback.DISMISS_EVENT_ACTION){
                             // Snackbar closed on its own
                             System.out.println("Here line111");
                             String User = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             DatabaseReference deleteEntry = FirebaseDatabase.getInstance().getReference().child("Patients").child(User).child("medicines").child("medicine_"+toDelete.getMedName());
         //                    System.out.println("Here at line 114.."+deleteEntry.toString());
                             deleteEntry.removeValue();
+                            messageDisplay();
                         }
                     }
 
@@ -151,6 +154,7 @@ public class MedicineFragment extends Fragment {
 //
 //                }
                 medicineAdapter.notifyDataSetChanged();
+                messageDisplay();
 
             }
         }).attachToRecyclerView(mMedRecyclerView);
@@ -176,6 +180,15 @@ public class MedicineFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void messageDisplay(){
+        if(medicineAdapter.getItemCount()==0){
+            mssg.setVisibility(View.VISIBLE);
+        }
+        else{
+            mssg.setVisibility(View.GONE);
+        }
     }
 
     private void medicineDataPrepare() {
@@ -213,7 +226,7 @@ public class MedicineFragment extends Fragment {
                     medicineDataList.add(m);
                 }
                 medicineAdapter.notifyDataSetChanged();
-
+                messageDisplay();
 
             }
 
